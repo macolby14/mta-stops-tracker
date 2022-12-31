@@ -7,3 +7,6 @@ __pycache__
 # ENV variables
 .env
 
+# misc things not to check-in
+tmp/
+
