@@ -1,1 +1,9 @@
+# python venv
 mta-py-env/
+
+# pycache
+__pycache__
+
+# ENV variables
+.env
+
