@@ -60,7 +60,10 @@ upcoming_ace_stop_times = find_next_n_stop_times(ace_stops, 3)
 time_to_next_stop = []
 
 for t in upcoming_ace_stop_times:
-    delta = t - datetime.now()
+    now = datetime.now()
+    if t < now:
+        continue
+    delta = t - now
     time_to_next_stop.append(delta.seconds // 60)
     print(f"next train in: {time_to_next_stop[-1]}min")
 
