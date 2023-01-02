@@ -1,8 +1,8 @@
 import gtfs_realtime_pb2
-import google.protobuf
 import requests
 from dotenv import load_dotenv
 import os
+from datetime import datetime
 
 print("Starting")
 
@@ -30,6 +30,13 @@ def find_ace_stops(feed, target_stop_id):
     
     return out
 
+# takes list of stop_time_updates and returns next n stops
+def find_next_n_stop_times(stop_time_updates, n):
+    stop_time_updates.sort(key=lambda update: update.arrival.time)
+    out = [datetime.fromtimestamp(update.arrival.time) for update in stop_time_updates[:n]]
+    return out
+
+
 
 
 # main
@@ -48,5 +55,14 @@ feed.ParseFromString(proto_res)
 # TODO - Make it so we can just declare the station name and direction.
 ace_stops = find_ace_stops(feed,"A44N")
 
-for stop in ace_stops:
-    print(stop)
+upcoming_ace_stop_times = find_next_n_stop_times(ace_stops, 3)
+
+time_to_next_stop = []
+
+for t in upcoming_ace_stop_times:
+    delta = t - datetime.now()
+    time_to_next_stop.append(delta.seconds // 60)
+    print(f"next train in: {time_to_next_stop[-1]}min")
+
+
+print(time_to_next_stop)
