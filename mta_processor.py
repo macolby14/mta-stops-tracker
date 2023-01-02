@@ -21,6 +21,8 @@ def read_gtfs_realtime(feed_url, api_key):
 # takes a FeedMessage and gets returns a list of stop_time_updates that stop at target
 def find_stop_on_ace(feed, target_stop_id):
     out = []
+    if not feed:
+        return out
     for entity in feed.entity:
         if not entity.trip_update:
             continue
@@ -37,35 +39,37 @@ def find_next_n_stop_times(stop_time_updates, n):
     return out
 
 
+def main():
+    load_dotenv()
+    MTA_API_KEY=os.getenv("MTA_API_KEY")
+    A_C_E_URI=os.getenv("A_C_E_URI")
+
+    proto_res = read_gtfs_realtime("https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/nyct%2Fgtfs-ace", MTA_API_KEY)
+    if not proto_res:
+        print("No response from api. Exiting")
+        exit(1)
+
+    feed = gtfs_realtime_pb2.FeedMessage()
+    feed.ParseFromString(proto_res)
+
+    # TODO - Make it so we can just declare the station name and direction.
+    ace_stops = find_stop_on_ace(feed,"A44N")
+
+    upcoming_ace_stop_times = find_next_n_stop_times(ace_stops, 3)
+
+    time_to_next_stop = []
+
+    for t in upcoming_ace_stop_times:
+        now = datetime.now()
+        if t < now:
+            continue
+        delta = t - now
+        time_to_next_stop.append(delta.seconds // 60)
+        print(f"next train in: {time_to_next_stop[-1]}min")
 
 
-# main
-load_dotenv()
-MTA_API_KEY=os.getenv("MTA_API_KEY")
-A_C_E_URI=os.getenv("A_C_E_URI")
-
-proto_res = read_gtfs_realtime("https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/nyct%2Fgtfs-ace", MTA_API_KEY)
-if not proto_res:
-    print("No response from api. Exiting")
-    exit(1)
-
-feed = gtfs_realtime_pb2.FeedMessage()
-feed.ParseFromString(proto_res)
-
-# TODO - Make it so we can just declare the station name and direction.
-ace_stops = find_stop_on_ace(feed,"A44N")
-
-upcoming_ace_stop_times = find_next_n_stop_times(ace_stops, 3)
-
-time_to_next_stop = []
-
-for t in upcoming_ace_stop_times:
-    now = datetime.now()
-    if t < now:
-        continue
-    delta = t - now
-    time_to_next_stop.append(delta.seconds // 60)
-    print(f"next train in: {time_to_next_stop[-1]}min")
+    print(time_to_next_stop)
 
 
-print(time_to_next_stop)
+if __name__ == "__main__":
+    main()
