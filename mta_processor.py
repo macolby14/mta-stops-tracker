@@ -19,7 +19,7 @@ def read_gtfs_realtime(feed_url, api_key):
     return response.content
 
 # takes a FeedMessage and gets returns a list of stop_time_updates that stop at target
-def find_ace_stops(feed, target_stop_id):
+def find_stop_on_ace(feed, target_stop_id):
     out = []
     for entity in feed.entity:
         if not entity.trip_update:
@@ -53,7 +53,7 @@ feed = gtfs_realtime_pb2.FeedMessage()
 feed.ParseFromString(proto_res)
 
 # TODO - Make it so we can just declare the station name and direction.
-ace_stops = find_ace_stops(feed,"A44N")
+ace_stops = find_stop_on_ace(feed,"A44N")
 
 upcoming_ace_stop_times = find_next_n_stop_times(ace_stops, 3)
 
