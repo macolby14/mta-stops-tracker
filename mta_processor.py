@@ -38,7 +38,7 @@ def find_next_n_stop_times(stop_time_updates, n):
     out = [datetime.fromtimestamp(update.arrival.time) for update in stop_time_updates[:n]]
     return out
 
-def find_n_times_to_next_stop(upcoming_stop_times):
+def find_times_to_next_stop(upcoming_stop_times):
     times_to_next_stop = []
 
     for t in upcoming_stop_times:
@@ -69,7 +69,7 @@ def main():
     ace_stops = find_stop_on_ace(feed,"A44N")
 
     upcoming_ace_stop_times = find_next_n_stop_times(ace_stops, 3)
-    out = find_n_times_to_next_stop(upcoming_ace_stop_times)
+    out = find_times_to_next_stop(upcoming_ace_stop_times)
     print(out)
 
 
