@@ -38,6 +38,19 @@ def find_next_n_stop_times(stop_time_updates, n):
     out = [datetime.fromtimestamp(update.arrival.time) for update in stop_time_updates[:n]]
     return out
 
+def find_n_times_to_next_stop(upcoming_stop_times):
+    times_to_next_stop = []
+
+    for t in upcoming_stop_times:
+        now = datetime.now()
+        if t < now:
+            continue
+        delta = t - now
+        times_to_next_stop.append(delta.seconds // 60)
+    
+    return times_to_next_stop
+
+
 
 def main():
     load_dotenv()
@@ -56,19 +69,8 @@ def main():
     ace_stops = find_stop_on_ace(feed,"A44N")
 
     upcoming_ace_stop_times = find_next_n_stop_times(ace_stops, 3)
-
-    time_to_next_stop = []
-
-    for t in upcoming_ace_stop_times:
-        now = datetime.now()
-        if t < now:
-            continue
-        delta = t - now
-        time_to_next_stop.append(delta.seconds // 60)
-        print(f"next train in: {time_to_next_stop[-1]}min")
-
-
-    print(time_to_next_stop)
+    out = find_n_times_to_next_stop(upcoming_ace_stop_times)
+    print(out)
 
 
 if __name__ == "__main__":
