@@ -10,3 +10,5 @@ __pycache__
 # misc things not to check-in
 tmp/
 
+# coverage doc
+.coverage
