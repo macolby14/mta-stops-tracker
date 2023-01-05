@@ -19,26 +19,26 @@ class TestMTAProcessor(unittest.TestCase):
 
         nextStops = mta_processor.find_next_n_stop_times(seven_stops, 3)
         expectedNextStops = [datetime(2023, 1, 3, 20, 31, 13), datetime(2023, 1, 3, 20, 39, 27), datetime(2023, 1, 3, 20, 51)]
-        self.assertEquals(nextStops,expectedNextStops)
+        self.assertEqual(nextStops,expectedNextStops)
 
     def test_find_times_to_next_stops(self):
         now = datetime.now()
         mockNextStops = [now + timedelta(minutes=2, seconds=30), now + timedelta(minutes=10, seconds= 30), now - timedelta(minutes=2)]
         times_to_next_stop = mta_processor.find_times_to_next_stop(mockNextStops)
-        self.assertEquals(times_to_next_stop, [2, 10])
+        self.assertEqual(times_to_next_stop, [2, 10])
     
     
     def test_find_times_to_next_stops_none(self):
         now = datetime.now()
         mockNextStops = [now - timedelta(minutes=2)]
         times_to_next_stop = mta_processor.find_times_to_next_stop(mockNextStops)
-        self.assertEquals(times_to_next_stop, [])
+        self.assertEqual(times_to_next_stop, [])
 
     def test_find_times_to_next_stops_zero(self):
         now = datetime.now()
         mockNextStops = [now - timedelta(seconds=30)]
         times_to_next_stop = mta_processor.find_times_to_next_stop(mockNextStops)
-        self.assertEquals(times_to_next_stop, [])
+        self.assertEqual(times_to_next_stop, [])
     
 
 if __name__ == '__main__':
