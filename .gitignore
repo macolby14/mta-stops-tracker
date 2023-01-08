@@ -1,5 +1,5 @@
 # python venv
-mta-py-env/
+env/
 
 # pycache
 __pycache__
