@@ -58,7 +58,7 @@ def find_times_to_next_stop(upcoming_stop_times):
     return times_to_next_stop
 
 
-def main():
+def get_upcoming_ace_stop_times():
     load_dotenv()
     MTA_API_KEY = os.getenv("MTA_API_KEY")
     A_C_E_URI = os.getenv("A_C_E_URI")
@@ -79,8 +79,8 @@ def main():
 
     upcoming_ace_stop_times = find_next_n_stop_times(ace_stops, 3)
     out = find_times_to_next_stop(upcoming_ace_stop_times)
-    print(out)
+    return out
 
 
 if __name__ == "__main__":
-    main()
+    print(get_upcoming_ace_stop_times())
