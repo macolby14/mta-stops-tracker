@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import "./reset.css";
 
-function fetchNextStopTimes() {
+async function fetchNextStopTimes() {
+    const res = await fetch("/api/stops").then((res) => res.json());
+    console.log(res);
     return [4, 10, 15, 20, 30, 40, 50, 60];
 }
 
@@ -10,7 +12,11 @@ function App() {
     const [nextStops, setNextStops] = useState<number[]>([]);
 
     useEffect(() => {
-        setNextStops(fetchNextStopTimes());
+        async function fetchData() {
+            const nextStopTimes = await fetchNextStopTimes();
+            setNextStops(nextStopTimes);
+        }
+        fetchData();
     }, []);
 
     return (
