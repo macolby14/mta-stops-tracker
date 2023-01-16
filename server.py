@@ -23,7 +23,7 @@ def serve(path):
         return send_from_directory(app.static_folder, "index.html")
 
 
-@app.get("/stops")
+@app.get("/api/stops")
 def stops():
     try:
         nextTimes = mta_processor.get_upcoming_ace_stop_times()
