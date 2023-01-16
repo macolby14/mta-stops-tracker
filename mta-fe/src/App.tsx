@@ -36,6 +36,12 @@ function App() {
             setNextStops(nextStopTimes);
         }
         fetchData();
+        /* Update every 20 seconds. 20 seconds is arbitrarily smaller than 1 min, time most care about */
+        const fetchDataIntervalId = setInterval(fetchData, 20000);
+
+        return () => {
+            clearInterval(fetchDataIntervalId);
+        };
     }, []);
 
     const errorDisplay = <div>Error {error}</div>;
