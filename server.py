@@ -33,7 +33,7 @@ def stops():
     return json.dumps(
         {
             "stops": {
-                "c": {"clinton-washington": mta_processor.get_upcoming_ace_stop_times()}
+                "c": {"clintonWashington": mta_processor.get_upcoming_ace_stop_times()}
             }
         }
     )
