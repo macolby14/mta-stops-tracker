@@ -20,7 +20,7 @@ function App() {
     }, []);
 
     return (
-        <body className="App">
+        <div className="App">
             <div className="NextTimesContainer VerticalFlexContainer">
                 {nextStops.map((stopTime) => {
                     return (
@@ -37,7 +37,7 @@ function App() {
                     );
                 })}
             </div>
-        </body>
+        </div>
     );
 }
 
