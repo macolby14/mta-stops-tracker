@@ -2,12 +2,18 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import "./reset.css";
 
+type NextStopsAPIType = {
+    line: string;
+    station: string;
+    nextTimes: number[];
+};
+
 function App() {
     const [nextStops, setNextStops] = useState<number[]>([]);
     const [error, setError] = useState<string | null>(null);
 
     async function fetchNextStopTimes() {
-        const res = await fetch("/api/stops")
+        const res = (await fetch("/api/stops")
             .then((res) => {
                 if (!res.ok) {
                     console.error("Error fetching /api/stops");
@@ -22,8 +28,8 @@ function App() {
                 console.log(err);
                 console.log(err.message);
                 setError(err.message);
-            });
-        return [4, 10, 15, 20, 30, 40, 50, 60];
+            })) as NextStopsAPIType;
+        return res.nextTimes;
     }
 
     useEffect(() => {

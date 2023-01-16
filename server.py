@@ -32,8 +32,8 @@ def stops():
 
     return json.dumps(
         {
-            "stops": {
-                "c": {"clintonWashington": mta_processor.get_upcoming_ace_stop_times()}
-            }
+            "line": "c",
+            "station": "clinton-washington",
+            "nextTimes": mta_processor.get_upcoming_ace_stop_times(),
         }
     )
