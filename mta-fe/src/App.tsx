@@ -32,8 +32,14 @@ function App() {
                 {nextStops.map((stopTime) => {
                     return (
                         <div className="NextTimesContainerChild NextTimesItem">
-                            <div>C</div>
-                            <div>{stopTime}</div>
+                            <div className="NextTimesItemContent NextTimesItemContainer">
+                                <div className="NextTimesItemCircle">
+                                    <div>C</div>
+                                </div>
+                            </div>
+                            <div className="NextTimesItemContent NextTimesItemTime">
+                                {stopTime} min
+                            </div>
                         </div>
                     );
                 })}
