@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
+import "./reset.css";
 
 function fetchNextStopTimes() {
     return [4, 10, 15, 20, 30, 40, 50, 60];
@@ -30,8 +31,9 @@ function App() {
             <div className="NextTimesContainer VerticalFlexContainer">
                 {nextStops.map((stopTime) => {
                     return (
-                        <div className="NextTimesContainerChild">
-                            C {stopTime}
+                        <div className="NextTimesContainerChild NextTimesItem">
+                            <div>C</div>
+                            <div>{stopTime}</div>
                         </div>
                     );
                 })}
