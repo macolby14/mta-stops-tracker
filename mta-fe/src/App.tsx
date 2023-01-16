@@ -24,9 +24,7 @@ function App() {
                 return res.json();
             })
             .catch((err) => {
-                console.log("Caught error");
-                console.log(err);
-                console.log(err.message);
+                console.error(err.message);
                 setError(err.message);
             })) as NextStopsAPIType;
         return res.nextTimes;
