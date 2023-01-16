@@ -1,6 +1,5 @@
 import gtfs_realtime_pb2
 import requests
-from dotenv import load_dotenv
 import os
 from datetime import datetime
 
@@ -59,7 +58,6 @@ def find_times_to_next_stop(upcoming_stop_times):
 
 
 def get_upcoming_ace_stop_times():
-    load_dotenv()
     MTA_API_KEY = os.getenv("MTA_API_KEY")
     A_C_E_URI = os.getenv("A_C_E_URI")
 
