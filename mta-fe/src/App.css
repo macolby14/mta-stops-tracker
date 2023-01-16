@@ -13,9 +13,20 @@
 }
 
 .VerticalFlexContainer {
-    background-color: lightblue;
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
+}
+
+.NextTimesContainer {
+    overflow-y: scroll;
+}
+
+.NextTimesContainerChild {
+    flex: 1 0 33.3333%;
+    /*
+    temporary
+    */
+    border: 1px solid black;
 }

@@ -3,7 +3,7 @@ import logo from "./logo.svg";
 import "./App.css";
 
 function fetchNextStopTimes() {
-    return [4, 10, 15];
+    return [4, 10, 15, 20, 30, 40, 50, 60];
 }
 
 type VertifcalFlexContainerProps = {
@@ -27,10 +27,10 @@ function App() {
 
     return (
         <body className="App">
-            <div className="VerticalFlexContainer">
+            <div className="NextTimesContainer VerticalFlexContainer">
                 {nextStops.map((stopTime) => {
                     return (
-                        <div style={{ flexGrow: 1, border: "1px solid black" }}>
+                        <div className="NextTimesContainerChild">
                             C {stopTime}
                         </div>
                     );
