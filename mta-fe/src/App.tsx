@@ -22,9 +22,12 @@ function App() {
     return (
         <div className="App">
             <div className="NextTimesContainer VerticalFlexContainer">
-                {nextStops.map((stopTime) => {
+                {nextStops.map((stopTime, ind) => {
                     return (
-                        <div className="NextTimesContainerChild NextTimesItem">
+                        <div
+                            key={ind}
+                            className="NextTimesContainerChild NextTimesItem"
+                        >
                             <div className="NextTimesItemContent NextTimesItemContainer">
                                 <div className="NextTimesItemCircle">
                                     <div>C</div>
