@@ -19,4 +19,9 @@ def serve(path):
 
 @app.get("/stops")
 def stops():
+    try:
+        nextTimes = mta_processor.get_upcoming_ace_stop_times()
+    except:
+        return json.dumps({"message": "internal error at GET /stops"}), 500
+
     return json.dumps({"stops": mta_processor.get_upcoming_ace_stop_times()})

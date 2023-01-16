@@ -68,8 +68,8 @@ def get_upcoming_ace_stop_times():
         MTA_API_KEY,
     )
     if not proto_res:
-        print("No response from api. Exiting")
-        exit(1)
+        print("No response from api. Raising exception")
+        raise Exception("Upstream API response error")
 
     feed = gtfs_realtime_pb2.FeedMessage()
     feed.ParseFromString(proto_res)
