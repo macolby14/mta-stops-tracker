@@ -6,6 +6,18 @@ function fetchNextStopTimes() {
     return [4, 10, 15];
 }
 
+type VertifcalFlexContainerProps = {
+    children?: React.ReactNode;
+};
+
+type FlexItemProps = {
+    children?: React.ReactNode;
+};
+
+function FlexItem({ children }: FlexItemProps) {
+    return <div>{children}</div>;
+}
+
 function App() {
     const [nextStops, setNextStops] = useState<number[]>([]);
 
@@ -14,13 +26,17 @@ function App() {
     }, []);
 
     return (
-        <div className="App">
-            <body>
+        <body className="App">
+            <div className="VerticalFlexContainer">
                 {nextStops.map((stopTime) => {
-                    return <div>C {stopTime}</div>;
+                    return (
+                        <div style={{ flexGrow: 1, border: "1px solid black" }}>
+                            C {stopTime}
+                        </div>
+                    );
                 })}
-            </body>
-        </div>
+            </div>
+        </body>
     );
 }
 

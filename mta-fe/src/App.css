@@ -11,3 +11,11 @@
     width: 800px;
     height: 480px;
 }
+
+.VerticalFlexContainer {
+    background-color: lightblue;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
