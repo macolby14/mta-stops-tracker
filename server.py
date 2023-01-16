@@ -8,7 +8,8 @@ from dotenv import load_dotenv
 app = Flask(__name__, static_folder="mta-fe/build")
 
 # ensure .env gets loaded for config
-if not os.path.isfile("./.env"):
+print(os.path.join(os.path.dirname(__file__), ".env"))
+if not os.path.join(os.path.dirname(__file__), ".env"):
     print("No .env file exists. Required to run program")
     exit(1)
 load_dotenv()
