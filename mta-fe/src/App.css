@@ -1,13 +1,13 @@
 .App {
     /*
-  * border primarily for testing to easily see outside of screen dimension of raspberry pi
-  * can probably leave this for production
-  */
+* border primarily for testing to easily see outside of screen dimension of raspberry pi
+* can probably leave this for production
+*/
     border: 1px solid black;
 
     /*
-  * manually set screen dimensions since only device intended to run on is the pi4
-  */
+* manually set screen dimensions since only device intended to run on is the pi4
+*/
     width: 800px;
     height: 480px;
 }
