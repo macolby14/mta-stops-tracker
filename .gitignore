@@ -12,3 +12,7 @@ tmp/
 
 # coverage doc
 .coverage
+
+
+# build artifacts
+dist/
