@@ -1,4 +1,4 @@
-import gtfs_realtime_pb2
+from . import gtfs_realtime_pb2
 import requests
 import os
 from datetime import datetime

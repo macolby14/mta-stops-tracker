@@ -1,5 +1,5 @@
 from flask import Flask, send_from_directory
-import mta_processor
+from . import mta_processor
 import json
 import os
 from dotenv import load_dotenv
