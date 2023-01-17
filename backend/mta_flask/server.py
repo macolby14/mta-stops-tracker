@@ -7,12 +7,9 @@ from dotenv import load_dotenv
 
 app = Flask(__name__, static_folder="mta-fe/build")
 
-# ensure .env gets loaded for config
-print(os.path.join(os.path.dirname(__file__), ".env"))
-if not os.path.join(os.path.dirname(__file__), ".env"):
+if not load_dotenv():
     print("No .env file exists. Required to run program")
     exit(1)
-load_dotenv()
 
 # serve staticn react app
 @app.route("/", defaults={"path": ""})
