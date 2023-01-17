@@ -1,3 +1,16 @@
+[project]
+name = "mta_flask"
+version = "0.0.1"
+authors = [
+  { name="Mark Colby", email="macolby14@gmail.com" },
+]
+description = "A python webserver that gives NYC MTA times"
+readme = "README.md"
+requires-python = ">=3.10"
+
+[project.urls]
+"Homepage" = "https://github.com/macolby14/mta-py"
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
