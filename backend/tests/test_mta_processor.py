@@ -2,6 +2,7 @@ import unittest
 from mta_flask import mta_processor
 from mta_flask import gtfs_realtime_pb2
 from datetime import datetime, timedelta
+import os
 
 
 class TestMTAProcessor(unittest.TestCase):
@@ -11,7 +12,12 @@ class TestMTAProcessor(unittest.TestCase):
 
     def test_find_stop_on_ace_results(self):
         feed = gtfs_realtime_pb2.FeedMessage()
-        test_file = open("test-data/example-ace-results", "rb")
+        test_file = open(
+            os.path.join(
+                os.path.dirname(__file__), "test-mock-data/example-ace-results"
+            ),
+            "rb",
+        )
         example_feed = test_file.read()
         test_file.close()
         feed.ParseFromString(example_feed)
