@@ -33,8 +33,7 @@ jobs:
 
       - name: Save build artifacts
         uses: actions/upload-artifact@v3
-        working-directory: ./backend
         with:
           name: backend-dist
           path: |
-            ./dist/*
+            ./backend/dist/*
