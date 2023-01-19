@@ -2,7 +2,8 @@ name: Build MTA-PY Backend
 
 on:
   push:
-    branches: [$default-branch]
+    branches:
+      - main
 
 jobs:
   build:
