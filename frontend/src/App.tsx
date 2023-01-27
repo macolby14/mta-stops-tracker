@@ -21,6 +21,7 @@ function App() {
                         `Fetch Failed. Status:${res.status}, Message: ${res.statusText}`
                     );
                 }
+                setError(null);
                 return res.json();
             })
             .catch((err) => {
