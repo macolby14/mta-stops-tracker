@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build:
+  build-fe:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
@@ -35,4 +35,4 @@ jobs:
         with:
           name: frontend-dist
           path: |
-            ./frontened/build/*
+            ./frontened/build/
