@@ -82,7 +82,7 @@ log  "activating venv" source venv/bin/activate
 log "installing flask app" python3 -m pip install mta_flask*.whl
 
 echo $(date) >> ${LOG_DIR}/be.log
-log "starting flask app" python3 -m flask --app mta_flask run &>> ${LOG_DIR}/be.log
+log "starting flask app" python3 -m flask --app mta_flask run &>> ${LOG_DIR}/be.log &
 echo "process: $!" >> ${LOG_DIR}/be.log
 
 log "removing tmp dir" rm -r $DIST_DIR/tmp
