@@ -1,7 +1,9 @@
 #!/bin/bash
 
-MTA_DIR=/opt/mta-py
-LOG_DIR=$MTA_DIR/deploy
+MTA_DIR=/opt/mta
+DEPLOY_DIR=$MTA_DIR/deploy
+
+$DEPLOY_DIR/deploy.sh
 
 # Cleaning up previous runs
 echo "Killing previous chromium-browser"
