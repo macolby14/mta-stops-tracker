@@ -69,10 +69,10 @@ function deploy_frontend() {
     -H "X-GitHub-Api-Version: 2022-11-28" \
     $ARCHIVE_DOWNLOAD_URL > $DIST_TMP_DIR/frontend-dist.zip
 
-  if [[ ! -d $DIST_DIR/frontend-dist ]]
-  then
-    mkdir $DIST_DIR/frontend-dist
-  fi
+
+  # remove and recreate any old folders
+  rm -r $DIST_DIR/frontend-dist
+  mkdir $DIST_DIR/frontend-dist
 
   log "unzipping fe artifact" unzip -d $DIST_DIR/frontend-dist $DIST_TMP_DIR/frontend-dist.zip
 }
@@ -111,11 +111,9 @@ function deploy_backend() {
   log "deactivating existing env" deactivate
 
 
-  if [[ ! -d $DIST_DIR/backend-dist ]]
-  then
-    mkdir $DIST_DIR/backend-dist
-  fi
-
+  # remove and recreate any old folders
+  rm -r $DIST_DIR/backend-dist
+  mkdir $DIST_DIR/backend-dist
 
   log "creating python venv" python3 -m venv backend-dist/venv
   log  "activating venv" source backend-dist/venv/bin/activate
