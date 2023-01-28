@@ -88,7 +88,6 @@ function deploy_backend() {
 
 
   log "cleaning up python from previous runs" pkill python3
-  log "cleaning chromium-browser from previous runs" pkill chromium-browser
 
   log "saving backend workflow info" curl \
     -H "Accept: application/vnd.github+json" \
