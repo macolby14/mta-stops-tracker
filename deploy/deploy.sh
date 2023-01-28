@@ -48,6 +48,11 @@ cd $DIST_DIR
 
 # frontend
 function deploy_frontend() {
+
+  # remove and recreate any old folders
+  rm -r $DIST_DIR/frontend-dist
+  mkdir $DIST_DIR/frontend-dist
+
   FRONTEND_WORKFLOW_FILE=$DIST_TMP_DIR/frontend-workflow-data.json
 
   log "saving frontend workflow info" curl \
@@ -69,17 +74,18 @@ function deploy_frontend() {
     -H "X-GitHub-Api-Version: 2022-11-28" \
     $ARCHIVE_DOWNLOAD_URL > $DIST_TMP_DIR/frontend-dist.zip
 
-
-  # remove and recreate any old folders
-  rm -r $DIST_DIR/frontend-dist
-  mkdir $DIST_DIR/frontend-dist
-
   log "unzipping fe artifact" unzip -d $DIST_DIR/frontend-dist $DIST_TMP_DIR/frontend-dist.zip
 }
 
 # backend
 function deploy_backend() {
   BACKEND_WORKFLOW_FILE=$DIST_TMP_DIR/backend-workflow-data.json
+
+
+  # remove and recreate any old folders
+  rm -r $DIST_DIR/backend-dist
+  mkdir $DIST_DIR/backend-dist
+
 
   log "cleaning up python from previous runs" pkill python3
   log "cleaning chromium-browser from previous runs" pkill chromium-browser
@@ -111,9 +117,6 @@ function deploy_backend() {
   log "deactivating existing env" deactivate
 
 
-  # remove and recreate any old folders
-  rm -r $DIST_DIR/backend-dist
-  mkdir $DIST_DIR/backend-dist
 
   log "creating python venv" python3 -m venv backend-dist/venv
   log  "activating venv" source backend-dist/venv/bin/activate
