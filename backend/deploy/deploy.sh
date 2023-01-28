@@ -24,7 +24,6 @@ set +o allexport
 # GITHUB_TOKEN= loaded from .env
 OWNER=macolby14
 REPO=mta-py
-WORKFLOW_ID=build-backend.yml
 
 # MTA variables
 MTA_DIR=/opt/mta
@@ -47,44 +46,91 @@ fi
 cd $DIST_DIR
 
 
-log "cleaning up python from previous runs" pkill python3
-log "cleaning chromium-browser from previous runs" pkill chromium-browser
+# frontend
+function deploy_frontend() {
+  FRONTEND_WORKFLOW_FILE=$DIST_TMP_DIR/frontend-workflow-data.json
 
-log "saving workflow info" curl \
-  -H "Accept: application/vnd.github+json" \
-  -H "Authorization: Bearer $GITHUB_TOKEN"\
-  -H "X-GitHub-Api-Version: 2022-11-28" \
-  "https://api.github.com/repos/$OWNER/$REPO/actions/workflows/build-backend.yml/runs?per_page=1&branch=main&event=push&status=success" \
-   > $DIST_TMP_DIR/workflow-data.json
+  log "saving frontend workflow info" curl \
+    -H "Accept: application/vnd.github+json" \
+    -H "Authorization: Bearer $GITHUB_TOKEN"\
+    -H "X-GitHub-Api-Version: 2022-11-28" \
+    "https://api.github.com/repos/$OWNER/$REPO/actions/workflows/build-frontend.yml/runs?per_page=1&branch=main&event=push&status=success" \
+    > $FRONTEND_WORKFLOW_FILE
+
+  ARTIFACT_URL=$(jq .workflow_runs[0].artifacts_url $FRONTEND_WORKFLOW_FILE | tr -d '"')
+
+  ARCHIVE_DOWNLOAD_URL=$(log "getting frontend archive url" curl -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GITHUB_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" ${ARTIFACT_URL} \
+    | jq .artifacts[0].archive_download_url \
+    | tr -d '"')
+
+  log "downloading frontend archive" curl -L \
+    -H "Accept: application/vnd.github+json" \
+    -H "Authorization: Bearer $GITHUB_TOKEN"\
+    -H "X-GitHub-Api-Version: 2022-11-28" \
+    $ARCHIVE_DOWNLOAD_URL > $DIST_TMP_DIR/frontend-dist.zip
+
+  if [[ ! -d $DIST_DIR/frontend-dist ]]
+  then
+    mkdir $DIST_DIR/frontend-dist
+  fi
+
+  log "unzipping fe artifact" unzip -d $DIST_DIR/frontend-dist $DIST_TMP_DIR/frontend-dist.zip
+}
+
+# backend
+function deploy_backend() {
+  BACKEND_WORKFLOW_FILE=$DIST_TMP_DIR/backend-workflow-data.json
+
+  log "cleaning up python from previous runs" pkill python3
+  log "cleaning chromium-browser from previous runs" pkill chromium-browser
+
+  log "saving backend workflow info" curl \
+    -H "Accept: application/vnd.github+json" \
+    -H "Authorization: Bearer $GITHUB_TOKEN"\
+    -H "X-GitHub-Api-Version: 2022-11-28" \
+    "https://api.github.com/repos/$OWNER/$REPO/actions/workflows/build-backend.yml/runs?per_page=1&branch=main&event=push&status=success" \
+    > $BACKEND_WORKFLOW_FILE
 
 
-WORKFLOW_ID=$(jq .workflow_runs[0].id $DIST_TMP_DIR/workflow-data.json)
-ARTIFACT_URL=$(jq .workflow_runs[0].artifacts_url $DIST_TMP_DIR/workflow-data.json | tr -d '"')
+  ARTIFACT_URL=$(jq .workflow_runs[0].artifacts_url $BACKEND_WORKFLOW_FILE | tr -d '"')
 
-ARCHIVE_DOWNLOAD_URL=$(log "getting archive url" curl -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GITHUB_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" ${ARTIFACT_URL} \
-  | jq .artifacts[0].archive_download_url \
-  | tr -d '"')
+  ARCHIVE_DOWNLOAD_URL=$(log "getting archive url" curl -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GITHUB_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" ${ARTIFACT_URL} \
+    | jq .artifacts[0].archive_download_url \
+    | tr -d '"')
 
 
-log "downloading archive" curl -L \
-  -H "Accept: application/vnd.github+json" \
-  -H "Authorization: Bearer $GITHUB_TOKEN"\
-  -H "X-GitHub-Api-Version: 2022-11-28" \
-  $ARCHIVE_DOWNLOAD_URL > $DIST_TMP_DIR/out.zip
 
-log "unzipping artifact" unzip -d $DIST_DIR $DIST_TMP_DIR/out.zip
+  log "downloading archive" curl -L \
+    -H "Accept: application/vnd.github+json" \
+    -H "Authorization: Bearer $GITHUB_TOKEN"\
+    -H "X-GitHub-Api-Version: 2022-11-28" \
+    $ARCHIVE_DOWNLOAD_URL > $DIST_TMP_DIR/backend-dist.zip
 
-log "deactivating existing env" deactivate
+  log "unzipping artifact" unzip -d $DIST_DIR/backend-dist $DIST_TMP_DIR/backend-dist.zip
 
-log "creating python venv" python3 -m venv venv
-log  "activating venv" source venv/bin/activate
+  log "deactivating existing env" deactivate
 
-log "installing flask app" python3 -m pip install mta_flask*.whl
 
-echo $(date) >> ${LOG_DIR}/be.log
-log "starting flask app" python3 -m flask --app mta_flask run &>> ${LOG_DIR}/be.log &
-echo "process: $!" >> ${LOG_DIR}/be.log
+  if [[ ! -d $DIST_DIR/backend-dist ]]
+  then
+    mkdir $DIST_DIR/backend-dist
+  fi
+
+
+  log "creating python venv" python3 -m venv backend-dist/venv
+  log  "activating venv" source backend-dist/venv/bin/activate
+
+  log "installing flask app" python3 -m pip install backend-dist/mta_flask*.whl
+
+  echo $(date) >> ${LOG_DIR}/be.log
+  log "starting flask app" python3 -m flask --app mta_flask run &>> ${LOG_DIR}/be.log &
+  echo "process: $!" >> ${LOG_DIR}/be.log
+
+  log "deactivating existing env" deactivate
+}
+
+
+deploy_frontend
+deploy_backend
 
 log "removing tmp dir" rm -r $DIST_DIR/tmp
-
-log "deactivating existing env" deactivate
