@@ -15,21 +15,26 @@ function log() {
   fi
   }
 
-set -o allexport
-source ../.env
-set +o allexport
-
-
-# Github variables
-# GITHUB_TOKEN= loaded from .env
-OWNER=macolby14
-REPO=mta-py
 
 # MTA variables
 MTA_DIR=/opt/mta
 LOG_DIR=$MTA_DIR/logs
 DIST_DIR=$MTA_DIR/dist
 DIST_TMP_DIR=$DIST_DIR/tmp
+
+# Github variables
+# GITHUB_TOKEN= loaded from .env
+OWNER=macolby14
+REPO=mta-py
+
+
+# load env variables from $MTA_DIR/.env
+set -o allexport
+source $MTA_DIR/.env
+set +o allexport
+
+
+
 
 if [[ ! -d $LOG_DIR ]]
 then
