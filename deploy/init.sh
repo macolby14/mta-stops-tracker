@@ -11,4 +11,4 @@ then
   exit 1
 fi
 
-$DEPLOY_DIR/start.sh
+$DEPLOY_DIR/run.sh
