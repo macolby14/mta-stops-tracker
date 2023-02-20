@@ -16,8 +16,6 @@ function log() {
   fi
   }
 
-<<<<<<< HEAD
-
 function log_fail(){
   log "$@";
   if [[ $? -eq 1 ]]
@@ -34,8 +32,6 @@ then
 fi
 source ../.env
 set +o allexport
-=======
->>>>>>> 07a93fda75eec671ae9779f4aa3da819b2fc73cd
 
 # MTA variables
 MTA_DIR=/opt/mta
