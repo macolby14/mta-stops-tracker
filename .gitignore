@@ -17,3 +17,6 @@ tmp/
 
 # build artifacts
 dist/
+
+# logs
+logs/
