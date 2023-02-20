@@ -16,6 +16,7 @@ function log() {
   fi
   }
 
+<<<<<<< HEAD
 
 function log_fail(){
   log "$@";
@@ -33,18 +34,28 @@ then
 fi
 source ../.env
 set +o allexport
-
-
-# Github variables
-# GITHUB_TOKEN= loaded from .env
-OWNER=macolby14
-REPO=mta-py
+=======
+>>>>>>> 07a93fda75eec671ae9779f4aa3da819b2fc73cd
 
 # MTA variables
 MTA_DIR=/opt/mta
 LOG_DIR=$MTA_DIR/logs
 DIST_DIR=$MTA_DIR/dist
 DIST_TMP_DIR=$DIST_DIR/tmp
+
+# Github variables
+# GITHUB_TOKEN= loaded from .env
+OWNER=macolby14
+REPO=mta-py
+
+
+# load env variables from $MTA_DIR/.env
+set -o allexport
+source $MTA_DIR/.env
+set +o allexport
+
+
+
 
 if [[ ! -d $LOG_DIR ]]
 then
