@@ -12,10 +12,25 @@ function log() {
   else
     echo "failed $PRINT" > /dev/tty;
     echo > /dev/tty
+    return 1
   fi
   }
 
+
+function log_fail(){
+  log "$@";
+  if [[ $? -eq 1 ]]
+  then
+    exit 1
+  fi 
+}
+
 set -o allexport
+if [[ ! -f ../.env ]]
+then
+  echo "no .env variable"
+  exit 1
+fi
 source ../.env
 set +o allexport
 
@@ -33,12 +48,12 @@ DIST_TMP_DIR=$DIST_DIR/tmp
 
 if [[ ! -d $LOG_DIR ]]
 then
-  log "making $LOG_DIR" mkdir $LOG_DIR
+  log_fail "making $LOG_DIR" mkdir $LOG_DIR
 fi
 
 if [[ ! -d $DIST_TMP_DIR ]]
 then
-  log "Making $DIST_TMP_DIR" mkdir -p $DIST_TMP_DIR
+  log_fail "making $DIST_TMP_DIR" mkdir -p $DIST_TMP_DIR
 else
   echo "$DIST_TMP_DIR already exists but should have been cleaned up" 1>&2
 fi
@@ -55,7 +70,7 @@ function deploy_frontend() {
 
   FRONTEND_WORKFLOW_FILE=$DIST_TMP_DIR/frontend-workflow-data.json
 
-  log "saving frontend workflow info" curl \
+  log_fail "saving frontend workflow info" curl \
     -H "Accept: application/vnd.github+json" \
     -H "Authorization: Bearer $GITHUB_TOKEN"\
     -H "X-GitHub-Api-Version: 2022-11-28" \
@@ -64,17 +79,17 @@ function deploy_frontend() {
 
   ARTIFACT_URL=$(jq .workflow_runs[0].artifacts_url $FRONTEND_WORKFLOW_FILE | tr -d '"')
 
-  ARCHIVE_DOWNLOAD_URL=$(log "getting frontend archive url" curl -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GITHUB_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" ${ARTIFACT_URL} \
+  ARCHIVE_DOWNLOAD_URL=$(log_fail "getting frontend archive url" curl -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GITHUB_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" ${ARTIFACT_URL} \
     | jq .artifacts[0].archive_download_url \
     | tr -d '"')
 
-  log "downloading frontend archive" curl -L \
+  log_fail "downloading frontend archive" curl -L \
     -H "Accept: application/vnd.github+json" \
     -H "Authorization: Bearer $GITHUB_TOKEN"\
     -H "X-GitHub-Api-Version: 2022-11-28" \
     $ARCHIVE_DOWNLOAD_URL > $DIST_TMP_DIR/frontend-dist.zip
 
-  log "unzipping fe artifact" unzip -d $DIST_DIR/frontend-dist $DIST_TMP_DIR/frontend-dist.zip
+  log_fail "unzipping fe artifact" unzip -d $DIST_DIR/frontend-dist $DIST_TMP_DIR/frontend-dist.zip
 }
 
 # backend
@@ -89,7 +104,7 @@ function deploy_backend() {
 
   log "cleaning up python from previous runs" pkill python3
 
-  log "saving backend workflow info" curl \
+  log_fail "saving backend workflow info" curl \
     -H "Accept: application/vnd.github+json" \
     -H "Authorization: Bearer $GITHUB_TOKEN"\
     -H "X-GitHub-Api-Version: 2022-11-28" \
@@ -105,13 +120,13 @@ function deploy_backend() {
 
 
 
-  log "downloading archive" curl -L \
+  log_fail "downloading archive" curl -L \
     -H "Accept: application/vnd.github+json" \
     -H "Authorization: Bearer $GITHUB_TOKEN"\
     -H "X-GitHub-Api-Version: 2022-11-28" \
     $ARCHIVE_DOWNLOAD_URL > $DIST_TMP_DIR/backend-dist.zip
 
-  log "unzipping artifact" unzip -d $DIST_DIR/backend-dist $DIST_TMP_DIR/backend-dist.zip
+  log_fail "unzipping artifact" unzip -d $DIST_DIR/backend-dist $DIST_TMP_DIR/backend-dist.zip
 
   log "deactivating existing env" deactivate
 
@@ -120,10 +135,10 @@ function deploy_backend() {
   log "creating python venv" python3 -m venv backend-dist/venv
   log  "activating venv" source backend-dist/venv/bin/activate
 
-  log "installing flask app" python3 -m pip install backend-dist/mta_flask*.whl
+  log_fail "installing flask app" python3 -m pip install backend-dist/mta_flask*.whl
 
   echo $(date) >> ${LOG_DIR}/be.log
-  log "starting flask app" python3 -m flask --app mta_flask run &>> ${LOG_DIR}/be.log &
+  log_fail "starting flask app" python3 -m flask --app mta_flask run &>> ${LOG_DIR}/be.log &
   echo "process: $!" >> ${LOG_DIR}/be.log
 
   log "deactivating existing env" deactivate

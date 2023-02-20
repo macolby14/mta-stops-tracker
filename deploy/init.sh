@@ -5,6 +5,14 @@ DEPLOY_DIR=$MTA_DIR/deploy
 
 $DEPLOY_DIR/deploy.sh
 
+if [[ $? -ne 0 ]]
+then
+  echo "deploy.sh failed. Exiting"
+  exit 1
+fi
+
+
+
 # Cleaning up previous runs
 echo "Killing previous chromium-browser"
 pkill chromium-browse
