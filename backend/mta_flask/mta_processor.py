@@ -1,18 +1,16 @@
 import os
 from datetime import datetime
+from .proto import gtfs_realtime_pb2
 
 import requests
-
-from .proto import gtfs_realtime_pb2
 
 print("Starting")
 
 
 # takes a url and api key and returns the response content
-def read_gtfs_realtime(feed_url, api_key):
+def read_gtfs_realtime(feed_url: str, api_key):
     req_headers = {"x-api-key": api_key}
     response = requests.get(feed_url, headers=req_headers)
-
     if response.status_code != 200:
         print(
             f"HTTP Response not 200, url:{response.request.url},status_code:{response.status_code}, reason:{response.reason}"
@@ -41,7 +39,8 @@ def find_stop_on_ace(feed, target_stop_id):
 def find_next_n_stop_times(stop_time_updates, n):
     stop_time_updates.sort(key=lambda update: update.arrival.time)
     out = [
-        datetime.fromtimestamp(update.arrival.time) for update in stop_time_updates[:n]
+        datetime.fromtimestamp(update.arrival.time)
+        for update in stop_time_updates[:n]
     ]
     return out
 

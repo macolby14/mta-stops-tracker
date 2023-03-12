@@ -40,7 +40,10 @@ exclude = [
 ]
 follow_imports = "skip"
 
-[flake8]
+[tool.yapf]
+based_on_style = "pep8"
+
+[tool.flake8]
 exclude = [
   "mta_flask/proto/gtfs_realtime_pb2.py",
 ]
