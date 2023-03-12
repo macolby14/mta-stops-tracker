@@ -1,6 +1,5 @@
 {
-  "python.formatting.provider": "black",
-  "editor.defaultFormatter": "ms-python.black-formatter",
+  "python.formatting.provider": "yapf",
   "editor.formatOnSave": true,
   "isort.check": true,
   "python.linting.flake8Enabled": true,
