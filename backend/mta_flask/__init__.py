@@ -18,12 +18,10 @@ def create_app(test_config=None):
         except:
             return json.dumps({"message": "internal error at GET /stops"}), 500
 
-        return json.dumps(
-            {
-                "line": "c",
-                "station": "clinton-washington",
-                "nextTimes": mta_processor.get_upcoming_ace_stop_times(),
-            }
-        )
+        return json.dumps({
+            "line": "c",
+            "station": "clinton-washington",
+            "nextTimes": mta_processor.get_upcoming_ace_stop_times(),
+        })
 
     return app

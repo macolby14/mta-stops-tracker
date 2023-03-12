@@ -41,7 +41,7 @@ exclude = [
 follow_imports = "skip"
 
 [tool.yapf]
-based_on_style = "pep8"
+based_on_style = "google"
 
 [tool.flake8]
 exclude = [
