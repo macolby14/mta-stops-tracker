@@ -1,7 +1,5 @@
-import os
 from . import mta_processor
 import json
-import os
 from dotenv import load_dotenv
 from flask import Flask
 

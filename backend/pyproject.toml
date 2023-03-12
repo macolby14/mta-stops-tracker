@@ -34,3 +34,15 @@ build-backend = "hatchling.build"
 
 [tool.black]
 target-version = ['py39']
+
+[tool.mypy]
+exclude = [
+    "mta_flask/proto/gtfs_realtime_pb2.py",
+]
+ignore_missing_imports = true
+follow_imports = "silent"
+
+[flake8]
+exclude = [
+  "mta_flask/proto/gtfs_realtime_pb2.py",
+]

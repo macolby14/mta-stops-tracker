@@ -1,6 +1,6 @@
 import unittest
 from mta_flask import mta_processor
-from mta_flask import gtfs_realtime_pb2
+from mta_flask.proto import gtfs_realtime_pb2
 from datetime import datetime, timedelta
 import os
 

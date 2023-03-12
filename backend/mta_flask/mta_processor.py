@@ -1,13 +1,15 @@
-from . import gtfs_realtime_pb2
-import requests
 import os
 from datetime import datetime
 
+import requests
+
+from .proto import gtfs_realtime_pb2
+
 print("Starting")
+
 
 # takes a url and api key and returns the response content
 def read_gtfs_realtime(feed_url, api_key):
-
     req_headers = {"x-api-key": api_key}
     response = requests.get(feed_url, headers=req_headers)
 
