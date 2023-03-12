@@ -37,10 +37,10 @@ target-version = ['py39']
 
 [tool.mypy]
 exclude = [
+    ".venv/",
     "mta_flask/proto/gtfs_realtime_pb2.py",
 ]
-ignore_missing_imports = true
-follow_imports = "silent"
+follow_imports = "skip"
 
 [flake8]
 exclude = [
