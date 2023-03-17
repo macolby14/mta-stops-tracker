@@ -1,17 +1,11 @@
 from . import mta_processor
-from .stations import StationLoader, Location
+from .app_factory import AppFactory
+from .location import Location
 import json
 from dotenv import load_dotenv
 from flask import Flask
 
 HOME_LOCATION = Location(lat=40.684026, lon=-73.967782)
-
-
-def load_station_data() -> None:
-    # yapf: disable
-    stations = StationLoader(filename='mta_flask/data/stations.csv').get_n_closest_stations(HOME_LOCATION)  # noqa: E501
-    # yapf: enable
-    print(stations)
 
 
 def create_app(test_config=None):
@@ -21,7 +15,8 @@ def create_app(test_config=None):
         print("No .env file exists. Required to run program")
         exit(1)
 
-    load_station_data()
+    app_factory = AppFactory()
+    app_factory.station_loader.get_n_closest_stations(HOME_LOCATION)
 
     @app.get("/api/stops")
     def stops():
