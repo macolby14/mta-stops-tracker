@@ -1,3 +1,5 @@
+from typing import Optional
+
 from .stations import StationLoader
 
 
@@ -6,11 +8,11 @@ class AppFactory:
     Class for generating objects with a singleton lifecycle
     """
 
-    def __init__(self):
-        self._station_loader = None
+    def __init__(self) -> None:
+        self._station_loader: Optional[StationLoader] = None
 
     @property
-    def station_loader(self):
+    def station_loader(self) -> StationLoader:
         if self._station_loader is None:
-            self._station_loader = StationLoader()
+            self._station_loader = StationLoader("./data/stations.csv")
         return self._station_loader

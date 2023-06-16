@@ -1,8 +1,9 @@
+import os
 import unittest
+from datetime import datetime, timedelta
+
 from mta_flask import mta_processor
 from mta_flask.proto import gtfs_realtime_pb2
-from datetime import datetime, timedelta
-import os
 
 
 class TestMTAProcessor(unittest.TestCase):

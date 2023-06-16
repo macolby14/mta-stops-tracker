@@ -1,8 +1,9 @@
 import os
 from datetime import datetime
-from .proto import gtfs_realtime_pb2
 
 import requests
+
+from .proto import gtfs_realtime_pb2
 
 print("Starting")
 

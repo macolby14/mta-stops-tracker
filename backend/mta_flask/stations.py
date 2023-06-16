@@ -3,8 +3,9 @@ Module for modeling subway station data
 """
 
 import geopy.distance  # type: ignore
-from .location import Location
 from pydantic import BaseModel
+
+from .location import Location
 
 
 class Station(BaseModel):
@@ -43,25 +44,23 @@ class StationLoader:
     ''''Class for loading station data from CSV'''
 
     @staticmethod
-    def _get_distance_between_locations(location1: Location,
-                                        location2: Location) -> float:
+    def _get_distance_between_locations(location1: Location, location2: Location) -> float:
         '''Get distance between two locations'''
         return geopy.distance.distance((location1.lat, location1.lon),
                                        (location2.lat, location2.lon)).miles
 
     @staticmethod
-    def _get_stations_by_closest_to_location(
-            stations: list[Station], location: Location) -> list[Station]:
+    def _get_stations_by_closest_to_location(stations: list[Station],
+                                             location: Location) -> list[Station]:
         '''Get stations sorted by closest to a given location'''
-        return sorted(stations,
-                      key=lambda s: StationLoader.
-                      _get_distance_between_locations(s.location, location))
+        return sorted(
+            stations,
+            key=lambda s: StationLoader._get_distance_between_locations(s.location, location))
 
-    def __init__(self, filename: str):
+    def __init__(self, filename: str) -> None:
         self.filename = filename
         self.stations = load_stations_from_csv(filename)
 
     def get_n_closest_stations(self, location: Location, n=10) -> list[Station]:
         '''Get stations sorted by closest to a given location'''
-        return StationLoader._get_stations_by_closest_to_location(
-            self.stations, location)[0:n]
+        return StationLoader._get_stations_by_closest_to_location(self.stations, location)[0:n]
