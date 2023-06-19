@@ -48,7 +48,11 @@ class FeedMessage(google.protobuf.message.Message):
     def header(self) -> global___FeedHeader:
         """Metadata about this feed and feed message."""
     @property
-    def entity(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___FeedEntity]:
+    def entity(
+        self,
+    ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[
+        global___FeedEntity
+    ]:
         """Contents of the feed."""
     def __init__(
         self,
@@ -56,8 +60,13 @@ class FeedMessage(google.protobuf.message.Message):
         header: global___FeedHeader | None = ...,
         entity: collections.abc.Iterable[global___FeedEntity] | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["header", b"header"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["entity", b"entity", "header", b"header"]) -> None: ...
+    def HasField(
+        self, field_name: typing_extensions.Literal["header", b"header"]
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal["entity", b"entity", "header", b"header"],
+    ) -> None: ...
 
 global___FeedMessage = FeedMessage
 
@@ -71,7 +80,12 @@ class FeedHeader(google.protobuf.message.Message):
         ValueType = typing.NewType("ValueType", builtins.int)
         V: typing_extensions.TypeAlias = ValueType
 
-    class _IncrementalityEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[FeedHeader._Incrementality.ValueType], builtins.type):  # noqa: F821
+    class _IncrementalityEnumTypeWrapper(
+        google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[
+            FeedHeader._Incrementality.ValueType
+        ],
+        builtins.type,
+    ):  # noqa: F821
         DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
         FULL_DATASET: FeedHeader._Incrementality.ValueType  # 0
         DIFFERENTIAL: FeedHeader._Incrementality.ValueType  # 1
@@ -107,8 +121,28 @@ class FeedHeader(google.protobuf.message.Message):
         incrementality: global___FeedHeader.Incrementality.ValueType | None = ...,
         timestamp: builtins.int | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["gtfs_realtime_version", b"gtfs_realtime_version", "incrementality", b"incrementality", "timestamp", b"timestamp"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["gtfs_realtime_version", b"gtfs_realtime_version", "incrementality", b"incrementality", "timestamp", b"timestamp"]) -> None: ...
+    def HasField(
+        self,
+        field_name: typing_extensions.Literal[
+            "gtfs_realtime_version",
+            b"gtfs_realtime_version",
+            "incrementality",
+            b"incrementality",
+            "timestamp",
+            b"timestamp",
+        ],
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "gtfs_realtime_version",
+            b"gtfs_realtime_version",
+            "incrementality",
+            b"incrementality",
+            "timestamp",
+            b"timestamp",
+        ],
+    ) -> None: ...
 
 global___FeedHeader = FeedHeader
 
@@ -155,8 +189,36 @@ class FeedEntity(google.protobuf.message.Message):
         vehicle: global___VehiclePosition | None = ...,
         alert: global___Alert | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["alert", b"alert", "id", b"id", "is_deleted", b"is_deleted", "trip_update", b"trip_update", "vehicle", b"vehicle"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["alert", b"alert", "id", b"id", "is_deleted", b"is_deleted", "trip_update", b"trip_update", "vehicle", b"vehicle"]) -> None: ...
+    def HasField(
+        self,
+        field_name: typing_extensions.Literal[
+            "alert",
+            b"alert",
+            "id",
+            b"id",
+            "is_deleted",
+            b"is_deleted",
+            "trip_update",
+            b"trip_update",
+            "vehicle",
+            b"vehicle",
+        ],
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "alert",
+            b"alert",
+            "id",
+            b"id",
+            "is_deleted",
+            b"is_deleted",
+            "trip_update",
+            b"trip_update",
+            "vehicle",
+            b"vehicle",
+        ],
+    ) -> None: ...
 
 global___FeedEntity = FeedEntity
 
@@ -242,8 +304,18 @@ class TripUpdate(google.protobuf.message.Message):
             time: builtins.int | None = ...,
             uncertainty: builtins.int | None = ...,
         ) -> None: ...
-        def HasField(self, field_name: typing_extensions.Literal["delay", b"delay", "time", b"time", "uncertainty", b"uncertainty"]) -> builtins.bool: ...
-        def ClearField(self, field_name: typing_extensions.Literal["delay", b"delay", "time", b"time", "uncertainty", b"uncertainty"]) -> None: ...
+        def HasField(
+            self,
+            field_name: typing_extensions.Literal[
+                "delay", b"delay", "time", b"time", "uncertainty", b"uncertainty"
+            ],
+        ) -> builtins.bool: ...
+        def ClearField(
+            self,
+            field_name: typing_extensions.Literal[
+                "delay", b"delay", "time", b"time", "uncertainty", b"uncertainty"
+            ],
+        ) -> None: ...
 
     @typing_extensions.final
     class StopTimeUpdate(google.protobuf.message.Message):
@@ -261,7 +333,12 @@ class TripUpdate(google.protobuf.message.Message):
             ValueType = typing.NewType("ValueType", builtins.int)
             V: typing_extensions.TypeAlias = ValueType
 
-        class _ScheduleRelationshipEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[TripUpdate.StopTimeUpdate._ScheduleRelationship.ValueType], builtins.type):  # noqa: F821
+        class _ScheduleRelationshipEnumTypeWrapper(
+            google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[
+                TripUpdate.StopTimeUpdate._ScheduleRelationship.ValueType
+            ],
+            builtins.type,
+        ):  # noqa: F821
             DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
             SCHEDULED: TripUpdate.StopTimeUpdate._ScheduleRelationship.ValueType  # 0
             """The vehicle is proceeding in accordance with its static schedule of
@@ -282,7 +359,9 @@ class TripUpdate(google.protobuf.message.Message):
             Neither arrival nor departure should be supplied.
             """
 
-        class ScheduleRelationship(_ScheduleRelationship, metaclass=_ScheduleRelationshipEnumTypeWrapper):
+        class ScheduleRelationship(
+            _ScheduleRelationship, metaclass=_ScheduleRelationshipEnumTypeWrapper
+        ):
             """The relation between this StopTime and the static schedule."""
 
         SCHEDULED: TripUpdate.StopTimeUpdate.ScheduleRelationship.ValueType  # 0
@@ -325,10 +404,39 @@ class TripUpdate(google.protobuf.message.Message):
             stop_id: builtins.str | None = ...,
             arrival: global___TripUpdate.StopTimeEvent | None = ...,
             departure: global___TripUpdate.StopTimeEvent | None = ...,
-            schedule_relationship: global___TripUpdate.StopTimeUpdate.ScheduleRelationship.ValueType | None = ...,
+            schedule_relationship: global___TripUpdate.StopTimeUpdate.ScheduleRelationship.ValueType
+            | None = ...,
         ) -> None: ...
-        def HasField(self, field_name: typing_extensions.Literal["arrival", b"arrival", "departure", b"departure", "schedule_relationship", b"schedule_relationship", "stop_id", b"stop_id", "stop_sequence", b"stop_sequence"]) -> builtins.bool: ...
-        def ClearField(self, field_name: typing_extensions.Literal["arrival", b"arrival", "departure", b"departure", "schedule_relationship", b"schedule_relationship", "stop_id", b"stop_id", "stop_sequence", b"stop_sequence"]) -> None: ...
+        def HasField(
+            self,
+            field_name: typing_extensions.Literal[
+                "arrival",
+                b"arrival",
+                "departure",
+                b"departure",
+                "schedule_relationship",
+                b"schedule_relationship",
+                "stop_id",
+                b"stop_id",
+                "stop_sequence",
+                b"stop_sequence",
+            ],
+        ) -> builtins.bool: ...
+        def ClearField(
+            self,
+            field_name: typing_extensions.Literal[
+                "arrival",
+                b"arrival",
+                "departure",
+                b"departure",
+                "schedule_relationship",
+                b"schedule_relationship",
+                "stop_id",
+                b"stop_id",
+                "stop_sequence",
+                b"stop_sequence",
+            ],
+        ) -> None: ...
 
     TRIP_FIELD_NUMBER: builtins.int
     VEHICLE_FIELD_NUMBER: builtins.int
@@ -346,7 +454,11 @@ class TripUpdate(google.protobuf.message.Message):
     def vehicle(self) -> global___VehicleDescriptor:
         """Additional information on the vehicle that is serving this trip."""
     @property
-    def stop_time_update(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___TripUpdate.StopTimeUpdate]:
+    def stop_time_update(
+        self,
+    ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[
+        global___TripUpdate.StopTimeUpdate
+    ]:
         """Updates to StopTimes for the trip (both future, i.e., predictions, and in
         some cases, past ones, i.e., those that already happened).
         The updates must be sorted by stop_sequence, and apply for all the
@@ -396,12 +508,39 @@ class TripUpdate(google.protobuf.message.Message):
         *,
         trip: global___TripDescriptor | None = ...,
         vehicle: global___VehicleDescriptor | None = ...,
-        stop_time_update: collections.abc.Iterable[global___TripUpdate.StopTimeUpdate] | None = ...,
+        stop_time_update: collections.abc.Iterable[global___TripUpdate.StopTimeUpdate]
+        | None = ...,
         timestamp: builtins.int | None = ...,
         delay: builtins.int | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["delay", b"delay", "timestamp", b"timestamp", "trip", b"trip", "vehicle", b"vehicle"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["delay", b"delay", "stop_time_update", b"stop_time_update", "timestamp", b"timestamp", "trip", b"trip", "vehicle", b"vehicle"]) -> None: ...
+    def HasField(
+        self,
+        field_name: typing_extensions.Literal[
+            "delay",
+            b"delay",
+            "timestamp",
+            b"timestamp",
+            "trip",
+            b"trip",
+            "vehicle",
+            b"vehicle",
+        ],
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "delay",
+            b"delay",
+            "stop_time_update",
+            b"stop_time_update",
+            "timestamp",
+            b"timestamp",
+            "trip",
+            b"trip",
+            "vehicle",
+            b"vehicle",
+        ],
+    ) -> None: ...
 
 global___TripUpdate = TripUpdate
 
@@ -415,7 +554,12 @@ class VehiclePosition(google.protobuf.message.Message):
         ValueType = typing.NewType("ValueType", builtins.int)
         V: typing_extensions.TypeAlias = ValueType
 
-    class _VehicleStopStatusEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[VehiclePosition._VehicleStopStatus.ValueType], builtins.type):  # noqa: F821
+    class _VehicleStopStatusEnumTypeWrapper(
+        google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[
+            VehiclePosition._VehicleStopStatus.ValueType
+        ],
+        builtins.type,
+    ):  # noqa: F821
         DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
         INCOMING_AT: VehiclePosition._VehicleStopStatus.ValueType  # 0
         """The vehicle is just about to arrive at the stop (on a stop
@@ -426,7 +570,9 @@ class VehiclePosition(google.protobuf.message.Message):
         IN_TRANSIT_TO: VehiclePosition._VehicleStopStatus.ValueType  # 2
         """The vehicle has departed and is in transit to the next stop."""
 
-    class VehicleStopStatus(_VehicleStopStatus, metaclass=_VehicleStopStatusEnumTypeWrapper): ...
+    class VehicleStopStatus(
+        _VehicleStopStatus, metaclass=_VehicleStopStatusEnumTypeWrapper
+    ): ...
     INCOMING_AT: VehiclePosition.VehicleStopStatus.ValueType  # 0
     """The vehicle is just about to arrive at the stop (on a stop
     display, the vehicle symbol typically flashes).
@@ -440,7 +586,12 @@ class VehiclePosition(google.protobuf.message.Message):
         ValueType = typing.NewType("ValueType", builtins.int)
         V: typing_extensions.TypeAlias = ValueType
 
-    class _CongestionLevelEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[VehiclePosition._CongestionLevel.ValueType], builtins.type):  # noqa: F821
+    class _CongestionLevelEnumTypeWrapper(
+        google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[
+            VehiclePosition._CongestionLevel.ValueType
+        ],
+        builtins.type,
+    ):  # noqa: F821
         DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
         UNKNOWN_CONGESTION_LEVEL: VehiclePosition._CongestionLevel.ValueType  # 0
         RUNNING_SMOOTHLY: VehiclePosition._CongestionLevel.ValueType  # 1
@@ -463,7 +614,12 @@ class VehiclePosition(google.protobuf.message.Message):
         ValueType = typing.NewType("ValueType", builtins.int)
         V: typing_extensions.TypeAlias = ValueType
 
-    class _OccupancyStatusEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[VehiclePosition._OccupancyStatus.ValueType], builtins.type):  # noqa: F821
+    class _OccupancyStatusEnumTypeWrapper(
+        google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[
+            VehiclePosition._OccupancyStatus.ValueType
+        ],
+        builtins.type,
+    ):  # noqa: F821
         DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
         EMPTY: VehiclePosition._OccupancyStatus.ValueType  # 0
         """The vehicle is considered empty by most measures, and has few or no
@@ -578,13 +734,60 @@ class VehiclePosition(google.protobuf.message.Message):
         position: global___Position | None = ...,
         current_stop_sequence: builtins.int | None = ...,
         stop_id: builtins.str | None = ...,
-        current_status: global___VehiclePosition.VehicleStopStatus.ValueType | None = ...,
+        current_status: global___VehiclePosition.VehicleStopStatus.ValueType
+        | None = ...,
         timestamp: builtins.int | None = ...,
-        congestion_level: global___VehiclePosition.CongestionLevel.ValueType | None = ...,
-        occupancy_status: global___VehiclePosition.OccupancyStatus.ValueType | None = ...,
+        congestion_level: global___VehiclePosition.CongestionLevel.ValueType
+        | None = ...,
+        occupancy_status: global___VehiclePosition.OccupancyStatus.ValueType
+        | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["congestion_level", b"congestion_level", "current_status", b"current_status", "current_stop_sequence", b"current_stop_sequence", "occupancy_status", b"occupancy_status", "position", b"position", "stop_id", b"stop_id", "timestamp", b"timestamp", "trip", b"trip", "vehicle", b"vehicle"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["congestion_level", b"congestion_level", "current_status", b"current_status", "current_stop_sequence", b"current_stop_sequence", "occupancy_status", b"occupancy_status", "position", b"position", "stop_id", b"stop_id", "timestamp", b"timestamp", "trip", b"trip", "vehicle", b"vehicle"]) -> None: ...
+    def HasField(
+        self,
+        field_name: typing_extensions.Literal[
+            "congestion_level",
+            b"congestion_level",
+            "current_status",
+            b"current_status",
+            "current_stop_sequence",
+            b"current_stop_sequence",
+            "occupancy_status",
+            b"occupancy_status",
+            "position",
+            b"position",
+            "stop_id",
+            b"stop_id",
+            "timestamp",
+            b"timestamp",
+            "trip",
+            b"trip",
+            "vehicle",
+            b"vehicle",
+        ],
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "congestion_level",
+            b"congestion_level",
+            "current_status",
+            b"current_status",
+            "current_stop_sequence",
+            b"current_stop_sequence",
+            "occupancy_status",
+            b"occupancy_status",
+            "position",
+            b"position",
+            "stop_id",
+            b"stop_id",
+            "timestamp",
+            b"timestamp",
+            "trip",
+            b"trip",
+            "vehicle",
+            b"vehicle",
+        ],
+    ) -> None: ...
 
 global___VehiclePosition = VehiclePosition
 
@@ -598,7 +801,12 @@ class Alert(google.protobuf.message.Message):
         ValueType = typing.NewType("ValueType", builtins.int)
         V: typing_extensions.TypeAlias = ValueType
 
-    class _CauseEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[Alert._Cause.ValueType], builtins.type):  # noqa: F821
+    class _CauseEnumTypeWrapper(
+        google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[
+            Alert._Cause.ValueType
+        ],
+        builtins.type,
+    ):  # noqa: F821
         DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
         UNKNOWN_CAUSE: Alert._Cause.ValueType  # 1
         OTHER_CAUSE: Alert._Cause.ValueType  # 2
@@ -639,7 +847,12 @@ class Alert(google.protobuf.message.Message):
         ValueType = typing.NewType("ValueType", builtins.int)
         V: typing_extensions.TypeAlias = ValueType
 
-    class _EffectEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[Alert._Effect.ValueType], builtins.type):  # noqa: F821
+    class _EffectEnumTypeWrapper(
+        google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[
+            Alert._Effect.ValueType
+        ],
+        builtins.type,
+    ):  # noqa: F821
         DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
         NO_SERVICE: Alert._Effect.ValueType  # 1
         REDUCED_SERVICE: Alert._Effect.ValueType  # 2
@@ -680,13 +893,21 @@ class Alert(google.protobuf.message.Message):
     HEADER_TEXT_FIELD_NUMBER: builtins.int
     DESCRIPTION_TEXT_FIELD_NUMBER: builtins.int
     @property
-    def active_period(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___TimeRange]:
+    def active_period(
+        self,
+    ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[
+        global___TimeRange
+    ]:
         """Time when the alert should be shown to the user. If missing, the
         alert will be shown as long as it appears in the feed.
         If multiple ranges are given, the alert will be shown during all of them.
         """
     @property
-    def informed_entity(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___EntitySelector]:
+    def informed_entity(
+        self,
+    ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[
+        global___EntitySelector
+    ]:
         """Entities whose users we should notify of this alert."""
     cause: global___Alert.Cause.ValueType
     effect: global___Alert.Effect.ValueType
@@ -712,8 +933,40 @@ class Alert(google.protobuf.message.Message):
         header_text: global___TranslatedString | None = ...,
         description_text: global___TranslatedString | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["cause", b"cause", "description_text", b"description_text", "effect", b"effect", "header_text", b"header_text", "url", b"url"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["active_period", b"active_period", "cause", b"cause", "description_text", b"description_text", "effect", b"effect", "header_text", b"header_text", "informed_entity", b"informed_entity", "url", b"url"]) -> None: ...
+    def HasField(
+        self,
+        field_name: typing_extensions.Literal[
+            "cause",
+            b"cause",
+            "description_text",
+            b"description_text",
+            "effect",
+            b"effect",
+            "header_text",
+            b"header_text",
+            "url",
+            b"url",
+        ],
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "active_period",
+            b"active_period",
+            "cause",
+            b"cause",
+            "description_text",
+            b"description_text",
+            "effect",
+            b"effect",
+            "header_text",
+            b"header_text",
+            "informed_entity",
+            b"informed_entity",
+            "url",
+            b"url",
+        ],
+    ) -> None: ...
 
 global___Alert = Alert
 
@@ -746,8 +999,12 @@ class TimeRange(google.protobuf.message.Message):
         start: builtins.int | None = ...,
         end: builtins.int | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["end", b"end", "start", b"start"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["end", b"end", "start", b"start"]) -> None: ...
+    def HasField(
+        self, field_name: typing_extensions.Literal["end", b"end", "start", b"start"]
+    ) -> builtins.bool: ...
+    def ClearField(
+        self, field_name: typing_extensions.Literal["end", b"end", "start", b"start"]
+    ) -> None: ...
 
 global___TimeRange = TimeRange
 
@@ -786,8 +1043,36 @@ class Position(google.protobuf.message.Message):
         odometer: builtins.float | None = ...,
         speed: builtins.float | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["bearing", b"bearing", "latitude", b"latitude", "longitude", b"longitude", "odometer", b"odometer", "speed", b"speed"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["bearing", b"bearing", "latitude", b"latitude", "longitude", b"longitude", "odometer", b"odometer", "speed", b"speed"]) -> None: ...
+    def HasField(
+        self,
+        field_name: typing_extensions.Literal[
+            "bearing",
+            b"bearing",
+            "latitude",
+            b"latitude",
+            "longitude",
+            b"longitude",
+            "odometer",
+            b"odometer",
+            "speed",
+            b"speed",
+        ],
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "bearing",
+            b"bearing",
+            "latitude",
+            b"latitude",
+            "longitude",
+            b"longitude",
+            "odometer",
+            b"odometer",
+            "speed",
+            b"speed",
+        ],
+    ) -> None: ...
 
 global___Position = Position
 
@@ -810,7 +1095,12 @@ class TripDescriptor(google.protobuf.message.Message):
         ValueType = typing.NewType("ValueType", builtins.int)
         V: typing_extensions.TypeAlias = ValueType
 
-    class _ScheduleRelationshipEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[TripDescriptor._ScheduleRelationship.ValueType], builtins.type):  # noqa: F821
+    class _ScheduleRelationshipEnumTypeWrapper(
+        google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[
+            TripDescriptor._ScheduleRelationship.ValueType
+        ],
+        builtins.type,
+    ):  # noqa: F821
         DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
         SCHEDULED: TripDescriptor._ScheduleRelationship.ValueType  # 0
         """Trip that is running in accordance with its GTFS schedule, or is close
@@ -828,7 +1118,9 @@ class TripDescriptor(google.protobuf.message.Message):
         CANCELED: TripDescriptor._ScheduleRelationship.ValueType  # 3
         """A trip that existed in the schedule but was removed."""
 
-    class ScheduleRelationship(_ScheduleRelationship, metaclass=_ScheduleRelationshipEnumTypeWrapper):
+    class ScheduleRelationship(
+        _ScheduleRelationship, metaclass=_ScheduleRelationshipEnumTypeWrapper
+    ):
         """The relation between this trip and the static schedule. If a trip is done
         in accordance with temporary schedule, not reflected in GTFS, then it
         shouldn't be marked as SCHEDULED, but likely as ADDED.
@@ -908,10 +1200,43 @@ class TripDescriptor(google.protobuf.message.Message):
         direction_id: builtins.int | None = ...,
         start_time: builtins.str | None = ...,
         start_date: builtins.str | None = ...,
-        schedule_relationship: global___TripDescriptor.ScheduleRelationship.ValueType | None = ...,
+        schedule_relationship: global___TripDescriptor.ScheduleRelationship.ValueType
+        | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["direction_id", b"direction_id", "route_id", b"route_id", "schedule_relationship", b"schedule_relationship", "start_date", b"start_date", "start_time", b"start_time", "trip_id", b"trip_id"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["direction_id", b"direction_id", "route_id", b"route_id", "schedule_relationship", b"schedule_relationship", "start_date", b"start_date", "start_time", b"start_time", "trip_id", b"trip_id"]) -> None: ...
+    def HasField(
+        self,
+        field_name: typing_extensions.Literal[
+            "direction_id",
+            b"direction_id",
+            "route_id",
+            b"route_id",
+            "schedule_relationship",
+            b"schedule_relationship",
+            "start_date",
+            b"start_date",
+            "start_time",
+            b"start_time",
+            "trip_id",
+            b"trip_id",
+        ],
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "direction_id",
+            b"direction_id",
+            "route_id",
+            b"route_id",
+            "schedule_relationship",
+            b"schedule_relationship",
+            "start_date",
+            b"start_date",
+            "start_time",
+            b"start_time",
+            "trip_id",
+            b"trip_id",
+        ],
+    ) -> None: ...
 
 global___TripDescriptor = TripDescriptor
 
@@ -942,8 +1267,18 @@ class VehicleDescriptor(google.protobuf.message.Message):
         label: builtins.str | None = ...,
         license_plate: builtins.str | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["id", b"id", "label", b"label", "license_plate", b"license_plate"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["id", b"id", "label", b"label", "license_plate", b"license_plate"]) -> None: ...
+    def HasField(
+        self,
+        field_name: typing_extensions.Literal[
+            "id", b"id", "label", b"label", "license_plate", b"license_plate"
+        ],
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "id", b"id", "label", b"label", "license_plate", b"license_plate"
+        ],
+    ) -> None: ...
 
 global___VehicleDescriptor = VehicleDescriptor
 
@@ -979,8 +1314,36 @@ class EntitySelector(google.protobuf.message.Message):
         trip: global___TripDescriptor | None = ...,
         stop_id: builtins.str | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["agency_id", b"agency_id", "route_id", b"route_id", "route_type", b"route_type", "stop_id", b"stop_id", "trip", b"trip"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["agency_id", b"agency_id", "route_id", b"route_id", "route_type", b"route_type", "stop_id", b"stop_id", "trip", b"trip"]) -> None: ...
+    def HasField(
+        self,
+        field_name: typing_extensions.Literal[
+            "agency_id",
+            b"agency_id",
+            "route_id",
+            b"route_id",
+            "route_type",
+            b"route_type",
+            "stop_id",
+            b"stop_id",
+            "trip",
+            b"trip",
+        ],
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "agency_id",
+            b"agency_id",
+            "route_id",
+            b"route_id",
+            "route_type",
+            b"route_type",
+            "stop_id",
+            b"stop_id",
+            "trip",
+            b"trip",
+        ],
+    ) -> None: ...
 
 global___EntitySelector = EntitySelector
 
@@ -1019,18 +1382,35 @@ class TranslatedString(google.protobuf.message.Message):
             text: builtins.str | None = ...,
             language: builtins.str | None = ...,
         ) -> None: ...
-        def HasField(self, field_name: typing_extensions.Literal["language", b"language", "text", b"text"]) -> builtins.bool: ...
-        def ClearField(self, field_name: typing_extensions.Literal["language", b"language", "text", b"text"]) -> None: ...
+        def HasField(
+            self,
+            field_name: typing_extensions.Literal[
+                "language", b"language", "text", b"text"
+            ],
+        ) -> builtins.bool: ...
+        def ClearField(
+            self,
+            field_name: typing_extensions.Literal[
+                "language", b"language", "text", b"text"
+            ],
+        ) -> None: ...
 
     TRANSLATION_FIELD_NUMBER: builtins.int
     @property
-    def translation(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___TranslatedString.Translation]:
+    def translation(
+        self,
+    ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[
+        global___TranslatedString.Translation
+    ]:
         """At least one translation must be provided."""
     def __init__(
         self,
         *,
-        translation: collections.abc.Iterable[global___TranslatedString.Translation] | None = ...,
+        translation: collections.abc.Iterable[global___TranslatedString.Translation]
+        | None = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["translation", b"translation"]) -> None: ...
+    def ClearField(
+        self, field_name: typing_extensions.Literal["translation", b"translation"]
+    ) -> None: ...
 
 global___TranslatedString = TranslatedString

@@ -3,9 +3,6 @@ from datetime import datetime
 
 from .fetcher import ACEFetcher
 
-from .proto import gtfs_realtime_pb2
-
-
 # # takes a url and api key and returns the response content
 # def read_gtfs_realtime(feed_url: str, api_key):
 #     req_headers = {"x-api-key": api_key}
@@ -60,16 +57,10 @@ async def get_upcoming_ace_stop_times():
     MTA_API_KEY = os.getenv("MTA_API_KEY")
     fetcher = ACEFetcher(MTA_API_KEY)
 
-    proto_res = await fetcher.fetch()
-    if not proto_res:
-        print("No response from api. Raising exception")
-        raise Exception("Upstream API response error")
-
-    feed = gtfs_realtime_pb2.FeedMessage()
-    feed.ParseFromString(proto_res)
+    mta_feed = await fetcher.fetch_and_parse()
 
     # TODO - Make it so we can just declare the station name and direction.
-    ace_stops = find_stop_on_ace(feed, "A44N")
+    ace_stops = find_stop_on_ace(mta_feed, "A44N")
 
     upcoming_ace_stop_times = find_next_n_stop_times(ace_stops, 3)
     out = find_times_to_next_stop(upcoming_ace_stop_times)
