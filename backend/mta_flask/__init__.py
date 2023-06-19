@@ -25,11 +25,8 @@ def create_app(test_config=None):
         return json.dumps({"message": "healthy"}), 200
 
     @app.get("/api/stops")
-    def stops() -> tuple[str, int]:
-        try:
-            nextTimes = mta_processor.get_upcoming_ace_stop_times()
-        except Exception:
-            return json.dumps({"message": "internal error at GET /stops"}), 500
+    async def stops() -> tuple[str, int]:
+        nextTimes = await mta_processor.get_upcoming_ace_stop_times()
 
         return (
             json.dumps(

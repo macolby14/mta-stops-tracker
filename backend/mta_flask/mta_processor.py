@@ -1,22 +1,22 @@
 import os
 from datetime import datetime
 
-import requests
+from .fetcher import ACEFetcher
 
 from .proto import gtfs_realtime_pb2
 
 
-# takes a url and api key and returns the response content
-def read_gtfs_realtime(feed_url: str, api_key):
-    req_headers = {"x-api-key": api_key}
-    response = requests.get(feed_url, headers=req_headers)
-    if response.status_code != 200:
-        print(
-            f"HTTP Response not 200, url:{response.request.url},status_code:{response.status_code}, reason:{response.reason}"
-        )
-        return
+# # takes a url and api key and returns the response content
+# def read_gtfs_realtime(feed_url: str, api_key):
+#     req_headers = {"x-api-key": api_key}
+#     response = requests.get(feed_url, headers=req_headers)
+#     if response.status_code != 200:
+#         print(
+#             f"HTTP Response not 200, url:{response.request.url},status_code:{response.status_code}, reason:{response.reason}"
+#         )
+#         return
 
-    return response.content
+#     return response.content
 
 
 # takes a FeedMessage and gets returns a list of stop_time_updates that stop at target
@@ -56,14 +56,11 @@ def find_times_to_next_stop(upcoming_stop_times):
     return times_to_next_stop
 
 
-def get_upcoming_ace_stop_times():
+async def get_upcoming_ace_stop_times():
     MTA_API_KEY = os.getenv("MTA_API_KEY")
-    A_C_E_URI = os.getenv("A_C_E_URI")
+    fetcher = ACEFetcher(MTA_API_KEY)
 
-    proto_res = read_gtfs_realtime(
-        "https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/nyct%2Fgtfs-ace",
-        MTA_API_KEY,
-    )
+    proto_res = await fetcher.fetch()
     if not proto_res:
         print("No response from api. Raising exception")
         raise Exception("Upstream API response error")
