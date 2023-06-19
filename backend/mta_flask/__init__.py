@@ -18,7 +18,6 @@ def create_app(test_config=None):
         exit(1)
 
     app_factory = AppFactory()
-    app_factory.station_loader.get_n_closest_stations(HOME_LOCATION)
 
     @app.get("/api/health")
     def health() -> tuple[str, int]:
@@ -38,5 +37,12 @@ def create_app(test_config=None):
             ),
             200,
         )
+
+    @app.get("/api/stations")
+    def stations() -> tuple[str, int]:
+        closest_stations = app_factory.station_loader.get_n_closest_stations(
+            HOME_LOCATION
+        )
+        return json.dumps([station.to_json() for station in closest_stations]), 200
 
     return app

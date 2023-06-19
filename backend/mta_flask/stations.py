@@ -4,6 +4,7 @@ Module for modeling subway station data
 
 import geopy.distance  # type: ignore
 from pydantic import BaseModel
+import json
 
 from .location import Location
 
@@ -17,6 +18,9 @@ class Station(BaseModel):
     southLabel: str
     location: Location
     gtfsId: str
+
+    def to_json(self) -> str:
+        return json.dumps(self.dict())
 
 
 def load_stations_from_csv(filename: str) -> list[Station]:
