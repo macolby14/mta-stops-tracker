@@ -1,3 +1,4 @@
+import os
 from typing import Optional
 
 from .stations import StationLoader
@@ -14,5 +15,7 @@ class AppFactory:
     @property
     def station_loader(self) -> StationLoader:
         if self._station_loader is None:
-            self._station_loader = StationLoader("./data/stations.csv")
+            current_directory = os.path.dirname(os.path.realpath(__file__))
+            stations_abs_path = os.path.join(current_directory, "data/stations.csv")
+            self._station_loader = StationLoader(stations_abs_path)
         return self._station_loader

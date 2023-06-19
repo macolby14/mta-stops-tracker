@@ -5,8 +5,6 @@ import requests
 
 from .proto import gtfs_realtime_pb2
 
-print("Starting")
-
 
 # takes a url and api key and returns the response content
 def read_gtfs_realtime(feed_url: str, api_key):
@@ -40,8 +38,7 @@ def find_stop_on_ace(feed, target_stop_id):
 def find_next_n_stop_times(stop_time_updates, n):
     stop_time_updates.sort(key=lambda update: update.arrival.time)
     out = [
-        datetime.fromtimestamp(update.arrival.time)
-        for update in stop_time_updates[:n]
+        datetime.fromtimestamp(update.arrival.time) for update in stop_time_updates[:n]
     ]
     return out
 
@@ -80,7 +77,3 @@ def get_upcoming_ace_stop_times():
     upcoming_ace_stop_times = find_next_n_stop_times(ace_stops, 3)
     out = find_times_to_next_stop(upcoming_ace_stop_times)
     return out
-
-
-if __name__ == "__main__":
-    print(get_upcoming_ace_stop_times())
