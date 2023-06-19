@@ -3,7 +3,11 @@
   "editor.formatOnSave": true,
   "isort.check": true,
   "python.linting.flake8Enabled": true,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter"
-  }
+  },
+  "flake8.args": ["--max-line-length=100"],
 }
