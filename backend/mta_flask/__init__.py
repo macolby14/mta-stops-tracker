@@ -43,6 +43,6 @@ def create_app(test_config=None):
         closest_stations = app_factory.station_loader.get_n_closest_stations(
             HOME_LOCATION
         )
-        return json.dumps([station.to_json() for station in closest_stations]), 200
+        return json.dumps([station.dict() for station in closest_stations]), 200
 
     return app
