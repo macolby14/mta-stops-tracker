@@ -62,6 +62,6 @@ async def get_upcoming_ace_stop_times():
     # TODO - Make it so we can just declare the station name and direction.
     ace_stops = find_stop_on_ace(mta_feed, "A44N")
 
-    upcoming_ace_stop_times = find_next_n_stop_times(ace_stops, 3)
+    upcoming_ace_stop_times = find_next_n_stop_times(ace_stops, 5)
     out = find_times_to_next_stop(upcoming_ace_stop_times)
     return out
