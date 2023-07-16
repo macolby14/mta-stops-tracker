@@ -44,15 +44,6 @@ DIST_TMP_DIR=$DIST_DIR/tmp
 OWNER=macolby14
 REPO=mta-py
 
-
-# load env variables from $MTA_DIR/.env
-set -o allexport
-source $MTA_DIR/.env
-set +o allexport
-
-
-
-
 if [[ ! -d $LOG_DIR ]]
 then
   log_fail "making $LOG_DIR" mkdir $LOG_DIR
@@ -78,7 +69,7 @@ function upgrade_frontend() {
   mkdir $DIST_DIR/frontend-dist
 
   FRONTEND_WORKFLOW_FILE=$DIST_TMP_DIR/frontend-workflow-data.json
-
+  echo "Token is ${GITHUB_TOKEN}"
   log_fail "saving frontend workflow info" curl \
     -H "Accept: application/vnd.github+json" \
     -H "Authorization: Bearer $GITHUB_TOKEN"\
@@ -91,6 +82,9 @@ function upgrade_frontend() {
   ARCHIVE_DOWNLOAD_URL=$(log_fail "getting frontend archive url" curl -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GITHUB_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" ${ARTIFACT_URL} \
     | jq .artifacts[0].archive_download_url \
     | tr -d '"')
+
+  echo "curl -H 'Accept: application/vnd.github+json' -H 'Authorization: Bearer ${GITHUB_TOKEN}' -H 'X-GitHub-Api-Version: 2022-11-28' ${ARTIFACT_URL}"
+  echo "Frontend ARCHIVE_DOWNLOAD_URL: ${ARCHIVE_DOWNLOAD_URL}"
 
   log_fail "downloading frontend archive" curl -L \
     -H "Accept: application/vnd.github+json" \
@@ -113,7 +107,6 @@ function upgrade_backend() {
   mkdir $DIST_DIR/backend-dist
 
 
-  log "cleaning up python from previous runs" pkill python3
 
   log_fail "saving backend workflow info" curl \
     -H "Accept: application/vnd.github+json" \

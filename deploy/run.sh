@@ -16,6 +16,23 @@ function log() {
   fi
 }
 
+function log_fail(){
+  log "$@";
+  if [[ $? -eq 1 ]]
+  then
+    exit 1
+  fi
+}
+
+
+# Start
+MTA_DIR=/opt/mta
+LOG_DIR=$MTA_DIR/logs
+DIST_DIR=$MTA_DIR/dist
+cd $DIST_DIR
+
+log "cleaning up python from previous runs" pkill python3
+
 # Start the backend 
 log "deactivating existing env" deactivate
 log "creating python venv" python3 -m venv backend-dist/venv
