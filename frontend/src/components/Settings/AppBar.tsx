@@ -3,6 +3,7 @@ import settingsImage from "../../images/settings.svg";
 
 export function AppBar() {
     const [showDialog, setShowDialog] = useState(false);
+    console.log(showDialog); //TODO - Remove. To remove not used error
 
     return (
         <div
