@@ -1,47 +1,4 @@
 import { useEffect, useState } from "react";
-import settingsImage from "../../images/settings.svg";
-
-export function Settings() {
-    const [showDialog, setShowDialog] = useState(false);
-
-    return (
-        <div
-            style={{
-                width: "100%",
-                height: "100%",
-                position: "absolute",
-                zIndex: 1,
-            }}
-        >
-            <SettingsIcon setShowDialog={setShowDialog} />
-            <Dialog showDialog={showDialog} setShowDialog={setShowDialog} />
-        </div>
-    );
-}
-
-interface SettingsIconProps {
-    setShowDialog: (a: boolean) => void;
-}
-
-export function SettingsIcon({ setShowDialog }: SettingsIconProps) {
-    return (
-        <div
-            style={{
-                width: "50px",
-                height: "50px",
-                position: "absolute",
-                right: "20px",
-                top: "5px",
-            }}
-            onClick={() => {
-                console.log("Clicked on settings");
-                setShowDialog(true);
-            }}
-        >
-            <img src={settingsImage} alt="Settings" />
-        </div>
-    );
-}
 
 interface DialogProps {
     showDialog: boolean;
