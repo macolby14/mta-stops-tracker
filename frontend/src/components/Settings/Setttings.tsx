@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import settingsImage from "../../images/settings.svg";
 
 export function Settings() {
@@ -48,7 +48,48 @@ interface DialogProps {
     setShowDialog: (a: boolean) => void;
 }
 
+interface RawStation {
+    name: string;
+    lines: string;
+    id: string;
+    northLabel: string;
+    southLabel: string;
+}
+
+interface Station {
+    name: string;
+    line: string;
+    id: string;
+    southLabel: string;
+    northLabel: string;
+}
+
 export function Dialog({ showDialog, setShowDialog }: DialogProps) {
+    const [stations, setStations] = useState<Station[]>([]);
+
+    useEffect(() => {
+        async function fetchData() {
+            const rawStations: RawStation[] = await fetch("/api/stations").then(
+                (resp) => resp.json()
+            );
+            const stations = rawStations
+                .map((station) => {
+                    const stationsPerLine: Station[] = [];
+                    for (const line of station.lines.split(" ")) {
+                        stationsPerLine.push({
+                            ...station,
+                            line,
+                        });
+                    }
+                    return stationsPerLine;
+                })
+                .flat();
+            console.log({ stations });
+            setStations(stations);
+        }
+        fetchData();
+    }, []);
+
     return (
         <dialog
             style={{
@@ -71,12 +112,9 @@ export function Dialog({ showDialog, setShowDialog }: DialogProps) {
             >
                 <div>
                     <h1>Settings</h1>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit. Ducimus excepturi nihil unde modi ut quo, ea error
-                        impedit possimus magnam? Veniam repudiandae eveniet
-                        ullam quidem nobis iste laudantium perferendis. Nulla.
-                    </p>
+                    {stations.map((station) => (
+                        <div>{station.name}</div>
+                    ))}
                 </div>
                 <div
                     style={{
