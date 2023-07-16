@@ -1,6 +1,36 @@
 #!/bin/bash
 
-# Cleaning up previous runs
+
+function log() {
+  PRINT=$1
+  shift 1;
+  echo "started $PRINT" > /dev/tty;
+  "$@";
+  if [[ $? -eq 0 ]]
+  then
+    echo "finished $PRINT" > /dev/tty;
+  else
+    echo "failed $PRINT" > /dev/tty;
+    echo > /dev/tty
+    return 1
+  fi
+}
+
+# Start the backend 
+log "deactivating existing env" deactivate
+log "creating python venv" python3 -m venv backend-dist/venv
+log  "activating venv" source backend-dist/venv/bin/activate
+
+log_fail "installing flask app" python3 -m pip install backend-dist/mta_flask*.whl
+
+echo $(date) >> ${LOG_DIR}/be.log
+log_fail "starting flask app" python3 -m flask --app mta_flask run &>> ${LOG_DIR}/be.log &
+echo "process: $!" >> ${LOG_DIR}/be.log
+
+log "deactivating existing env" deactivate
+
+
+# Start the browser
 echo "Killing previous chromium-browser"
 pkill chromium-browse
 echo "Finished killing previous processes"

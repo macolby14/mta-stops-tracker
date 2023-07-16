@@ -69,7 +69,9 @@ cd $DIST_DIR
 
 
 # frontend
-function deploy_frontend() {
+function upgrade_frontend() {
+  # Produces upgraded frontend static files by pulling latest from Github workflow
+  # Frontend does not run. It is 100% static, so this is upgrading the frontend
 
   # remove and recreate any old folders
   rm -r $DIST_DIR/frontend-dist
@@ -100,7 +102,9 @@ function deploy_frontend() {
 }
 
 # backend
-function deploy_backend() {
+function upgrade_backend() {
+  # Produces upgraded backend files by pulling latest from Github workflow
+
   BACKEND_WORKFLOW_FILE=$DIST_TMP_DIR/backend-workflow-data.json
 
 
@@ -135,24 +139,10 @@ function deploy_backend() {
 
   log_fail "unzipping artifact" unzip -d $DIST_DIR/backend-dist $DIST_TMP_DIR/backend-dist.zip
 
-  log "deactivating existing env" deactivate
-
-
-
-  log "creating python venv" python3 -m venv backend-dist/venv
-  log  "activating venv" source backend-dist/venv/bin/activate
-
-  log_fail "installing flask app" python3 -m pip install backend-dist/mta_flask*.whl
-
-  echo $(date) >> ${LOG_DIR}/be.log
-  log_fail "starting flask app" python3 -m flask --app mta_flask run &>> ${LOG_DIR}/be.log &
-  echo "process: $!" >> ${LOG_DIR}/be.log
-
-  log "deactivating existing env" deactivate
+  
 }
 
-
-deploy_frontend
-deploy_backend
+upgrade_frontend
+upgrade_backend
 
 log "removing tmp dir" rm -r $DIST_DIR/tmp
