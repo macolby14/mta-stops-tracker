@@ -1,5 +1,6 @@
 import { useState } from "react";
 import settingsImage from "../../images/settings.svg";
+import { TimeDisplay } from "./TimeDisplay";
 
 export function AppBar() {
     const [showDialog, setShowDialog] = useState(false);
@@ -44,14 +45,4 @@ export function SettingsIcon({ setShowDialog }: SettingsIconProps) {
             <img src={settingsImage} alt="Settings" />
         </div>
     );
-}
-
-export function TimeDisplay() {
-    const now = new Date();
-    const hours = now.getHours().toString().padStart(2, "0");
-    const minutes = now.getMinutes().toString().padStart(2, "0");
-
-    const formattedTime = `${hours}:${minutes}`;
-
-    return <div style={{ fontSize: "48px" }}>{formattedTime}</div>;
 }

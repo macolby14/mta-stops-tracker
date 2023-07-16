@@ -1,6 +1,6 @@
 import "./App.css";
 import "./reset.css";
-import { AppBar } from "./components/Settings/AppBar";
+import { AppBar } from "./components/AppBar/AppBar";
 import { NextStopsDisplay } from "./components/NextStopsDisplay/NextStopsDisplay";
 
 function App() {
