@@ -2,7 +2,7 @@ import "./App.css";
 import "./reset.css";
 import { AppBar } from "./components/AppBar/AppBar";
 import { NextStopsDisplay } from "./components/NextStopsDisplay/NextStopsDisplay";
-import { SettingsModal } from "./components/Modal/SettingsModal";
+import { SettingsModal } from "./components/Modal/Modal";
 import { ModalProvider } from "./components/Modal/ModalContext";
 
 function App() {
