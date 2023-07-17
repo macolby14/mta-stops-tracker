@@ -1,7 +1,5 @@
-import settingsImage from "../../images/settings.svg";
 import { TimeDisplay } from "./TimeDisplay";
-import { ModalContext, ModalProvider } from "../Modal/ModalContext";
-import { useContext } from "react";
+import { SettingsIcon } from "./SettingsIcon";
 
 export function AppBar() {
     return (
@@ -20,25 +18,6 @@ export function AppBar() {
         >
             <TimeDisplay />
             <SettingsIcon />
-        </div>
-    );
-}
-
-export function SettingsIcon() {
-    const { setShowModal } = useContext(ModalContext);
-
-    return (
-        <div
-            style={{
-                width: "50px",
-                height: "50px",
-            }}
-            onClick={() => {
-                console.log("Clicked on settings");
-                setShowModal(true);
-            }}
-        >
-            <img src={settingsImage} alt="Settings" />
         </div>
     );
 }
