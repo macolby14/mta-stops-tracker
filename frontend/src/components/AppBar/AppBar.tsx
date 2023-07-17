@@ -1,11 +1,9 @@
-import { useState } from "react";
 import settingsImage from "../../images/settings.svg";
 import { TimeDisplay } from "./TimeDisplay";
+import { ModalContext, ModalProvider } from "../Modal/ModalContext";
+import { useContext } from "react";
 
 export function AppBar() {
-    const [showDialog, setShowDialog] = useState(false);
-    console.log(showDialog); //TODO - Remove. To remove not used error
-
     return (
         <div
             style={{
@@ -21,16 +19,14 @@ export function AppBar() {
             }}
         >
             <TimeDisplay />
-            <SettingsIcon setShowDialog={setShowDialog} />
+            <SettingsIcon />
         </div>
     );
 }
 
-interface SettingsIconProps {
-    setShowDialog: (a: boolean) => void;
-}
+export function SettingsIcon() {
+    const { setShowModal } = useContext(ModalContext);
 
-export function SettingsIcon({ setShowDialog }: SettingsIconProps) {
     return (
         <div
             style={{
@@ -39,7 +35,7 @@ export function SettingsIcon({ setShowDialog }: SettingsIconProps) {
             }}
             onClick={() => {
                 console.log("Clicked on settings");
-                setShowDialog(true);
+                setShowModal(true);
             }}
         >
             <img src={settingsImage} alt="Settings" />

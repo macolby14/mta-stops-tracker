@@ -1,9 +1,5 @@
-import { useEffect, useState } from "react";
-
-interface DialogProps {
-    showDialog: boolean;
-    setShowDialog: (a: boolean) => void;
-}
+import { useContext, useEffect, useState } from "react";
+import { ModalContext } from "./ModalContext";
 
 interface RawStation {
     name: string;
@@ -21,11 +17,12 @@ interface Station {
     northLabel: string;
 }
 
-export function Dialog({ showDialog, setShowDialog }: DialogProps) {
+export function SettingsModal() {
+    const { showModal, setShowModal } = useContext(ModalContext);
     const [stations, setStations] = useState<Station[]>([]);
 
     useEffect(() => {
-        async function fetchData() {
+        async function fetchStationData() {
             const rawStations: RawStation[] = await fetch("/api/stations").then(
                 (resp) => resp.json()
             );
@@ -41,10 +38,9 @@ export function Dialog({ showDialog, setShowDialog }: DialogProps) {
                     return stationsPerLine;
                 })
                 .flat();
-            console.log({ stations });
             setStations(stations);
         }
-        fetchData();
+        fetchStationData();
     }, []);
 
     return (
@@ -57,7 +53,7 @@ export function Dialog({ showDialog, setShowDialog }: DialogProps) {
                 left: "50%",
                 transform: "translate(-50%, -50%)",
             }}
-            open={showDialog}
+            open={showModal}
         >
             <div
                 style={{
@@ -69,8 +65,8 @@ export function Dialog({ showDialog, setShowDialog }: DialogProps) {
             >
                 <div>
                     <h1>Settings</h1>
-                    {stations.map((station) => (
-                        <div>{station.name}</div>
+                    {stations.map((station, i) => (
+                        <div key={i}>{station.name}</div>
                     ))}
                 </div>
                 <div
@@ -81,7 +77,7 @@ export function Dialog({ showDialog, setShowDialog }: DialogProps) {
                         right: "10px",
                     }}
                     onClick={() => {
-                        setShowDialog(false);
+                        setShowModal(false);
                     }}
                 >
                     Exit
