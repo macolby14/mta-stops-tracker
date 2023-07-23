@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 
 import "./NextStopsDisplay.css";
 
-
 type NextStopsAPIType = {
     line: string;
     station: string;
@@ -72,4 +71,3 @@ export function NextStopsDisplay() {
 
     return <>{error ? errorDisplay : body}</>;
 }
-
