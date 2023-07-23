@@ -76,22 +76,38 @@ export function Toggle({ label, name, value, checked, onChange }: ToggleProps) {
     );
 }
 
+interface StationSelected {
+    id: string; // i.e. A44
+    direction: "north" | "south";
+    line: string; // i.e. A, C, G etc.
+    selected: boolean;
+}
+
 /**
  * Displays the settings modal. Shows a list of stations with checkboxes for based on /api/stations endpoint.
  * Stores in state the line (i.e. C, A, G, etc.), the stop id (i.e. A44), and the direction (i.e. N or S)
  */
 export function SettingsDisplay() {
     const [stations, setStations] = useState<StationDisplayRow[]>([]);
+    const [stationsSelected, setStationsSelected] = useState<StationSelected[]>(
+        []
+    );
 
-    function handleCheckboxChange(ev: ChangeEvent, id: string) {
+    console.log(stationsSelected.filter((station) => station.selected));
+
+    function handleSelectStation(
+        ev: ChangeEvent,
+        id: string,
+        direction: "north" | "south"
+    ) {
         const target = ev.target as HTMLInputElement;
         const checked = target.checked;
-        setStations((stations) =>
-            stations.map((station) => {
-                if (station.id === id) {
-                    return { ...station, checked };
+        setStationsSelected((prevValues) =>
+            prevValues.map((sta) => {
+                if (sta.id === id && sta.direction === direction) {
+                    return { ...sta, selected: checked };
                 }
-                return station;
+                return sta;
             })
         );
     }
@@ -105,6 +121,27 @@ export function SettingsDisplay() {
                 .map((rawStation) => stationDataToDisplayRows(rawStation))
                 .flat();
             setStations(stationsDisplayRows);
+
+            const stationsSelectedFromStationRows = stationsDisplayRows
+                .map((stationRow) => {
+                    return [
+                        {
+                            id: stationRow.id,
+                            direction: "north",
+                            line: stationRow.line,
+                            selected: false,
+                        } as StationSelected,
+                        {
+                            id: stationRow.id,
+                            direction: "south",
+                            line: stationRow.line,
+                            selected: false,
+                        } as StationSelected,
+                    ];
+                })
+                .flat();
+
+            setStationsSelected(stationsSelectedFromStationRows);
         }
         fetchStationData();
     }, []);
@@ -125,9 +162,15 @@ export function SettingsDisplay() {
                                     name={id}
                                     value="north"
                                     label={northLabel}
-                                    checked={false}
+                                    checked={
+                                        stationsSelected.find(
+                                            (station) =>
+                                                station.id === id &&
+                                                station.direction === "north"
+                                        )?.selected || false
+                                    }
                                     onChange={(ev) =>
-                                        handleCheckboxChange(ev, id)
+                                        handleSelectStation(ev, id, "north")
                                     }
                                 />
                             </ListItem>
@@ -136,9 +179,15 @@ export function SettingsDisplay() {
                                     name={id}
                                     value="south"
                                     label={southLabel}
-                                    checked={false}
+                                    checked={
+                                        stationsSelected.find(
+                                            (station) =>
+                                                station.id === id &&
+                                                station.direction === "south"
+                                        )?.selected || false
+                                    }
                                     onChange={(ev) =>
-                                        handleCheckboxChange(ev, id)
+                                        handleSelectStation(ev, id, "south")
                                     }
                                 />
                             </ListItem>
