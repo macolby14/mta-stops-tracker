@@ -25,7 +25,8 @@ export default function stationsReducer(
                 (station: StationSelected) => {
                     if (
                         station.id === action.payload.id &&
-                        station.direction === action.payload.direction
+                        station.direction === action.payload.direction &&
+                        station.line === action.payload.line
                     ) {
                         return {
                             ...station,

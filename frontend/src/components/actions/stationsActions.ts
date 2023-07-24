@@ -12,13 +12,15 @@ export const setStationsSelected = ({
     id,
     direction,
     selected,
-}: Omit<StationSelected, "line">) => {
+    line,
+}: StationSelected) => {
     return {
         type: "SET_STATION_SELECTED",
         payload: {
             id,
             direction,
             selected,
+            line,
         },
     } as const;
 };

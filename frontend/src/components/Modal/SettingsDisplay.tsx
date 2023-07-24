@@ -98,11 +98,14 @@ export function SettingsDisplay() {
     function handleSelectStation(
         ev: ChangeEvent,
         id: string,
-        direction: "north" | "south"
+        direction: "north" | "south",
+        line: string
     ) {
         const target = ev.target as HTMLInputElement;
         const checked = target.checked;
-        dispatch(setStationsSelected({ id, direction, selected: checked }));
+        dispatch(
+            setStationsSelected({ id, direction, selected: checked, line })
+        );
     }
 
     useEffect(() => {
@@ -159,11 +162,17 @@ export function SettingsDisplay() {
                                         stationsSelected.find(
                                             (station) =>
                                                 station.id === id &&
-                                                station.direction === "north"
+                                                station.direction === "north" &&
+                                                station.line === line
                                         )?.selected || false
                                     }
                                     onChange={(ev) =>
-                                        handleSelectStation(ev, id, "north")
+                                        handleSelectStation(
+                                            ev,
+                                            id,
+                                            "north",
+                                            line
+                                        )
                                     }
                                 />
                             </ListItem>
@@ -176,11 +185,17 @@ export function SettingsDisplay() {
                                         stationsSelected.find(
                                             (station) =>
                                                 station.id === id &&
-                                                station.direction === "south"
+                                                station.direction === "south" &&
+                                                station.line === line
                                         )?.selected || false
                                     }
                                     onChange={(ev) =>
-                                        handleSelectStation(ev, id, "south")
+                                        handleSelectStation(
+                                            ev,
+                                            id,
+                                            "south",
+                                            line
+                                        )
                                     }
                                 />
                             </ListItem>
