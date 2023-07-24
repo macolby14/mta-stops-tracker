@@ -1,5 +1,11 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { styled } from "styled-components";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import {
+    loadStationsSelected,
+    setStationsSelected,
+} from "../actions/stationsActions";
+import { StationSelected } from "../../reducers/stationsReducer";
 
 interface RawStation {
     name: string;
@@ -76,22 +82,16 @@ export function Toggle({ label, name, value, checked, onChange }: ToggleProps) {
     );
 }
 
-interface StationSelected {
-    id: string; // i.e. A44
-    direction: "north" | "south";
-    line: string; // i.e. A, C, G etc.
-    selected: boolean;
-}
-
 /**
  * Displays the settings modal. Shows a list of stations with checkboxes for based on /api/stations endpoint.
  * Stores in state the line (i.e. C, A, G, etc.), the stop id (i.e. A44), and the direction (i.e. N or S)
  */
 export function SettingsDisplay() {
     const [stations, setStations] = useState<StationDisplayRow[]>([]);
-    const [stationsSelected, setStationsSelected] = useState<StationSelected[]>(
-        []
+    const stationsSelected = useAppSelector(
+        (state) => state.stations.stationsSelected
     );
+    const dispatch = useAppDispatch();
 
     console.log(stationsSelected.filter((station) => station.selected));
 
@@ -102,14 +102,7 @@ export function SettingsDisplay() {
     ) {
         const target = ev.target as HTMLInputElement;
         const checked = target.checked;
-        setStationsSelected((prevValues) =>
-            prevValues.map((sta) => {
-                if (sta.id === id && sta.direction === direction) {
-                    return { ...sta, selected: checked };
-                }
-                return sta;
-            })
-        );
+        dispatch(setStationsSelected({ id, direction, selected: checked }));
     }
 
     useEffect(() => {
@@ -141,10 +134,10 @@ export function SettingsDisplay() {
                 })
                 .flat();
 
-            setStationsSelected(stationsSelectedFromStationRows);
+            dispatch(loadStationsSelected(stationsSelectedFromStationRows));
         }
         fetchStationData();
-    }, []);
+    }, [dispatch]);
 
     return (
         <div>
