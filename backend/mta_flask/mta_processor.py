@@ -1,7 +1,7 @@
 import os
 from datetime import datetime
 
-from .fetcher import FetcherFactory
+from .fetcher import FetchersGroup
 
 # # takes a url and api key and returns the response content
 # def read_gtfs_realtime(feed_url: str, api_key):
@@ -53,14 +53,14 @@ def find_times_to_next_stop(upcoming_stop_times):
     return times_to_next_stop
 
 
-async def get_upcoming_stop_times(line: str):
+async def get_upcoming_stop_times(lines: list[str]):
     MTA_API_KEY = os.getenv("MTA_API_KEY")
-    fetcher = FetcherFactory().create(line, MTA_API_KEY)
+    fetcherGroup = FetchersGroup(lines, MTA_API_KEY)
 
-    mta_feed = await fetcher.fetch_and_parse()
+    mta_feed = await fetcherGroup.fetch_and_parse()
 
     # TODO - Make it so we can just declare the station name and direction.
-    ace_stops = find_stop_on_ace(mta_feed, "A44N")
+    ace_stops = find_stop_on_ace(mta_feed[0], "A44N")
 
     upcoming_ace_stop_times = find_next_n_stop_times(ace_stops, 5)
     out = find_times_to_next_stop(upcoming_ace_stop_times)
