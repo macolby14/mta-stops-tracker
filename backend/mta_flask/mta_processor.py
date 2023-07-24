@@ -1,7 +1,7 @@
 import os
 from datetime import datetime
 
-from .fetcher import ACEFetcher
+from .fetcher import FetcherFactory
 
 # # takes a url and api key and returns the response content
 # def read_gtfs_realtime(feed_url: str, api_key):
@@ -53,9 +53,9 @@ def find_times_to_next_stop(upcoming_stop_times):
     return times_to_next_stop
 
 
-async def get_upcoming_ace_stop_times():
+async def get_upcoming_stop_times(line: str):
     MTA_API_KEY = os.getenv("MTA_API_KEY")
-    fetcher = ACEFetcher(MTA_API_KEY)
+    fetcher = FetcherFactory().create(line, MTA_API_KEY)
 
     mta_feed = await fetcher.fetch_and_parse()
 

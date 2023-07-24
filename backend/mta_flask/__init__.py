@@ -25,7 +25,7 @@ def create_app(test_config=None):
 
     @app.get("/api/stops")
     async def stops() -> tuple[str, int]:
-        nextTimes = await mta_processor.get_upcoming_ace_stop_times()
+        nextTimes = await mta_processor.get_upcoming_stop_times(line="C")
 
         return (
             json.dumps(
