@@ -9,5 +9,5 @@
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter"
   },
-  "flake8.args": ["--max-line-length=100"],
+  "flake8.args": ["--max-line-length=100"]
 }
