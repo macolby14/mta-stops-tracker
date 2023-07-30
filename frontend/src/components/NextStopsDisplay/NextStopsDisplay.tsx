@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
-
-import "./NextStopsDisplay.css";
+import { useEffect, useState } from "react";
+import { styled } from "styled-components";
 
 type NextStop = {
     line: string;
@@ -9,8 +8,42 @@ type NextStop = {
     direction: string;
 };
 
+const NextTimesContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+`;
+
+const NextTimesRow = styled.div`
+    flex: 0 0 40%;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+`;
+
+const NextTimesItem = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 6rem;
+    padding: 8px;
+    flex-grow: 1;
+`;
+
+const ACLineCircle = styled.div`
+    background-color: blue;
+    color: white;
+    border-radius: 100%;
+    height: 100%;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+
 export function NextStopsDisplay() {
-    const [nextStops, setNextStops] = useState<number[]>([]);
+    const [nextStops, setNextStops] = useState<NextStop[]>([]);
     const [error, setError] = useState<string | null>(null);
 
     async function fetchNextStopTimes() {
@@ -29,7 +62,7 @@ export function NextStopsDisplay() {
                 console.error(err.message);
                 setError(err.message);
             })) as NextStop[];
-        return res.map((stop) => stop.time);
+        return res;
     }
 
     useEffect(() => {
@@ -49,25 +82,18 @@ export function NextStopsDisplay() {
     const errorDisplay = <div>Error {error}</div>;
 
     const body = (
-        <div className="NextTimesContainer VerticalFlexContainer">
-            {nextStops.map((stopTime, ind) => {
+        <NextTimesContainer>
+            {nextStops.map((stop, ind) => {
                 return (
-                    <div
-                        key={ind}
-                        className="NextTimesContainerChild NextTimesItem"
-                    >
-                        <div className="NextTimesItemContent NextTimesItemContainer">
-                            <div className="NextTimesItemCircle">
-                                <div>C</div>
-                            </div>
-                        </div>
-                        <div className="NextTimesItemContent NextTimesItemTime">
-                            {stopTime} min
-                        </div>
-                    </div>
+                    <NextTimesRow key={ind}>
+                        <NextTimesItem>
+                            <ACLineCircle>{stop.line}</ACLineCircle>
+                        </NextTimesItem>
+                        <NextTimesItem>{stop.time} min</NextTimesItem>
+                    </NextTimesRow>
                 );
             })}
-        </div>
+        </NextTimesContainer>
     );
 
     return <>{error ? errorDisplay : body}</>;
