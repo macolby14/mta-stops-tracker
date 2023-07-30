@@ -23,7 +23,7 @@ class Fetcher:
 
 
 class FetchersGroup:
-    def __init__(self, lines: list[str], api_key: str) -> None:
+    def __init__(self, lines: set[str], api_key: str) -> None:
         self.line_to_fetchers = {
             "C": ACEFetcher(api_key),
             "A": ACEFetcher(api_key),

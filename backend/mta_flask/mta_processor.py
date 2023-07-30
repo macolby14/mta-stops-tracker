@@ -30,7 +30,7 @@ def find_relevant_stops(
                     out.append(
                         StopTimeUpdate(
                             stop_id=stop_time_update.stop_id,
-                            arrival=stop_time_update.arrival.time,
+                            arrival_time=stop_time_update.arrival.time,
                             route_id=entity.trip_update.trip.route_id,
                         )
                     )
@@ -40,10 +40,13 @@ def find_relevant_stops(
 
 def find_next_n_stop_times(stop_time_updates: list[StopTimeUpdate], n: int):
     """
-    Produces a list of the next n stop times from the given list of StopTimeUpdates.
+    Produces a list of the next n stop times from the given
+    list of StopTimeUpdates.
     """
-    stop_time_updates.sort(key=lambda update: update.arrival)
-    out = [datetime.fromtimestamp(update.arrival) for update in stop_time_updates[:n]]
+    stop_time_updates.sort(key=lambda update: update.arrival_time)
+    out = [
+        datetime.fromtimestamp(update.arrival_time) for update in stop_time_updates[:n]
+    ]
     return out
 
 
@@ -60,14 +63,14 @@ def find_times_to_next_stop(upcoming_stop_times):
     return times_to_next_stop
 
 
-async def get_upcoming_stop_times(lines: list[str]):
+async def get_upcoming_stop_times(stations_selected: list[StationSelected]):
     MTA_API_KEY = os.getenv("MTA_API_KEY")
     if not MTA_API_KEY:
         raise Exception("MTA_API_KEY not set")
 
-    fetcherGroup = FetchersGroup(lines, MTA_API_KEY)
+    lines = set([station.line for station in stations_selected])
 
-    stations_selected = [StationSelected(stop_id="A44N", line="C")]
+    fetcherGroup = FetchersGroup(lines, MTA_API_KEY)
 
     mta_feed = await fetcherGroup.fetch_and_parse()
 
