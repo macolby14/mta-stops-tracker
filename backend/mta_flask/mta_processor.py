@@ -2,7 +2,7 @@ import os
 from datetime import datetime
 
 from .fetcher import FetchersGroup
-from .models.StopTimeUpdate import StopTimeUpdate
+from .models.StopTimeUpdate import StopTimeUpdate, StopInfo
 from .models.StationSelection import StationSelected
 
 from .proto import gtfs_realtime_pb2
@@ -38,32 +38,46 @@ def find_relevant_stops(
     return out
 
 
-def find_next_n_stop_times(stop_time_updates: list[StopTimeUpdate], n: int):
+def find_next_n_stop_times(
+    stop_time_updates: list[StopTimeUpdate], n: int
+) -> list[StopTimeUpdate]:
     """
     Produces a list of the next n stop times from the given
     list of StopTimeUpdates.
     """
     stop_time_updates.sort(key=lambda update: update.arrival_time)
-    out = [
-        datetime.fromtimestamp(update.arrival_time) for update in stop_time_updates[:n]
-    ]
-    return out
+    return stop_time_updates[:n]
 
 
-def find_times_to_next_stop(upcoming_stop_times):
-    times_to_next_stop = []
+def format_stop_info(upcoming_stops: list[StopTimeUpdate]) -> list[StopInfo]:
+    formatted_stops: list[StopInfo] = []
 
-    for t in upcoming_stop_times:
+    for stop in upcoming_stops:
+        t = datetime.fromtimestamp(stop.arrival_time)
         now = datetime.now()
         if t < now:
             continue
         delta = t - now
-        times_to_next_stop.append(delta.seconds // 60)
+        time_to_next_stop = delta.seconds // 60
 
-    return times_to_next_stop
+        stop_name = stop.stop_id
+        line_name = stop.route_id
+        stop_direction = "Manhattan"
+        formatted_stops.append(
+            StopInfo(
+                station=stop_name,
+                line=line_name,
+                direction=stop_direction,
+                time=time_to_next_stop,
+            )
+        )
+
+    return formatted_stops
 
 
-async def get_upcoming_stop_times(stations_selected: list[StationSelected]):
+async def get_upcoming_stop_times(
+    stations_selected: list[StationSelected],
+) -> list[StopInfo]:
     MTA_API_KEY = os.getenv("MTA_API_KEY")
     if not MTA_API_KEY:
         raise Exception("MTA_API_KEY not set")
@@ -85,5 +99,4 @@ async def get_upcoming_stop_times(stations_selected: list[StationSelected]):
         )
 
     upcoming_stop_times = find_next_n_stop_times(stops, 5)
-    out = find_times_to_next_stop(upcoming_stop_times)
-    return out
+    return format_stop_info(upcoming_stop_times)

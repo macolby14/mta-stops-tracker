@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 
 import "./NextStopsDisplay.css";
 
-type NextStopsAPIType = {
+type NextStop = {
     line: string;
     station: string;
-    nextTimes: number[];
+    time: number;
+    direction: string;
 };
 
 export function NextStopsDisplay() {
@@ -27,8 +28,8 @@ export function NextStopsDisplay() {
             .catch((err) => {
                 console.error(err.message);
                 setError(err.message);
-            })) as NextStopsAPIType;
-        return res.nextTimes;
+            })) as NextStop[];
+        return res.map((stop) => stop.time);
     }
 
     useEffect(() => {

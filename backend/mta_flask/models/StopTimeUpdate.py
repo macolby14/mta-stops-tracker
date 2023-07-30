@@ -8,3 +8,11 @@ class StopTimeUpdate:
     stop_id: str
     arrival_time: int
     route_id: str
+
+
+@dataclass
+class StopInfo:
+    direction: str
+    station: str
+    line: str
+    time: int  # time_to_next_stop

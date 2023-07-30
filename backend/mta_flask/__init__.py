@@ -8,6 +8,9 @@ from .app_factory import AppFactory
 from .location import Location
 from .models.StationSelection import StationSelected
 
+import dataclasses
+
+
 HOME_LOCATION = Location(lat=40.684026, lon=-73.967782)
 
 
@@ -27,20 +30,10 @@ def create_app(test_config=None):
     @app.get("/api/stops")
     async def stops() -> tuple[str, int]:
         stations_selected = [StationSelected(stop_id="A44N", line="C")]
-        nextTimes = await mta_processor.get_upcoming_stop_times(
+        nextStops = await mta_processor.get_upcoming_stop_times(
             stations_selected=stations_selected
         )
-
-        return (
-            json.dumps(
-                {
-                    "line": "c",
-                    "station": "clinton-washington",
-                    "nextTimes": nextTimes,
-                }
-            ),
-            200,
-        )
+        return json.dumps([dataclasses.asdict(stop) for stop in nextStops]), 200
 
     @app.get("/api/stations")
     def stations() -> tuple[str, int]:

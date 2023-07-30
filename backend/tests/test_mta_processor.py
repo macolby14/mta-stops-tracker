@@ -40,19 +40,19 @@ class TestMTAProcessor(unittest.TestCase):
             now + timedelta(minutes=10, seconds=30),
             now - timedelta(minutes=2),
         ]
-        times_to_next_stop = mta_processor.find_times_to_next_stop(mockNextStops)
+        times_to_next_stop = mta_processor.format_stop_info(mockNextStops)
         self.assertEqual(times_to_next_stop, [2, 10])
 
     def test_find_times_to_next_stops_none(self):
         now = datetime.now()
         mockNextStops = [now - timedelta(minutes=2)]
-        times_to_next_stop = mta_processor.find_times_to_next_stop(mockNextStops)
+        times_to_next_stop = mta_processor.format_stop_info(mockNextStops)
         self.assertEqual(times_to_next_stop, [])
 
     def test_find_times_to_next_stops_zero(self):
         now = datetime.now()
         mockNextStops = [now - timedelta(seconds=30)]
-        times_to_next_stop = mta_processor.find_times_to_next_stop(mockNextStops)
+        times_to_next_stop = mta_processor.format_stop_info(mockNextStops)
         self.assertEqual(times_to_next_stop, [])
 
 
