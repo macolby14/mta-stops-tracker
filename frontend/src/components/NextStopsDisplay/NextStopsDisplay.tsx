@@ -1,6 +1,45 @@
 import { useEffect, useState } from "react";
 import { styled } from "styled-components";
 
+enum LineColor {
+    BLUE = "rgb(0,57,165)",
+    ORANGE = "rgb(255,101,28)",
+    LIGHT_GREEN = "rgb(108,189,69)",
+    GREEN = "rgb(0,165,82)",
+    GRAY = "rgb(137,137,137)",
+    YELLOW = "rgb(253,204,11)",
+    RED = "rgb(236,27,36)",
+    PURPLE = "rgb(204,0,203)",
+    BROWN = "rgb(153,102,51)",
+}
+
+const lineToColor = new Map<string, string>(
+    Object.entries({
+        A: LineColor.BLUE,
+        C: LineColor.BLUE,
+        E: LineColor.BLUE,
+        B: LineColor.ORANGE,
+        D: LineColor.ORANGE,
+        F: LineColor.ORANGE,
+        M: LineColor.ORANGE,
+        G: LineColor.LIGHT_GREEN,
+        N: LineColor.YELLOW,
+        Q: LineColor.YELLOW,
+        R: LineColor.YELLOW,
+        W: LineColor.YELLOW,
+        J: LineColor.BROWN,
+        Z: LineColor.BROWN,
+        L: LineColor.GRAY,
+        "1": LineColor.RED,
+        "2": LineColor.RED,
+        "3": LineColor.RED,
+        "4": LineColor.GREEN,
+        "5": LineColor.GREEN,
+        "6": LineColor.GREEN,
+        "7": LineColor.PURPLE,
+    })
+);
+
 type NextStop = {
     line: string;
     station: string;
@@ -31,8 +70,8 @@ const NextTimesItem = styled.div`
     flex-grow: 1;
 `;
 
-const ACLineCircle = styled.div`
-    background-color: blue;
+const LineCircle = styled.div`
+    background-color: ${(props) => props.color};
     color: white;
     border-radius: 100%;
     height: 100%;
@@ -87,7 +126,9 @@ export function NextStopsDisplay() {
                 return (
                     <NextTimesRow key={ind}>
                         <NextTimesItem>
-                            <ACLineCircle>{stop.line}</ACLineCircle>
+                            <LineCircle color={lineToColor.get(stop.line)}>
+                                {stop.line}
+                            </LineCircle>
                         </NextTimesItem>
                         <NextTimesItem>{stop.time} min</NextTimesItem>
                     </NextTimesRow>
