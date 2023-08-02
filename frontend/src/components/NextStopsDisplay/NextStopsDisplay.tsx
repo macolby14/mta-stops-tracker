@@ -72,9 +72,9 @@ const NextTimesItem = styled.div`
 
 const LineDirectionContainer = styled.div`
     height: 100%;
-    aspect-ratio: "1";
-    display: "flex";
-    flex-direction: "column";
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
     align-items: center;
 `;
 
