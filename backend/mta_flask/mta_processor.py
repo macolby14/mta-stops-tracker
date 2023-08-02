@@ -98,5 +98,5 @@ async def get_upcoming_stop_times(
             )
         )
 
-    upcoming_stop_times = find_next_n_stop_times(stops, 5)
+    upcoming_stop_times = find_next_n_stop_times(stops, 10)
     return format_stop_info(upcoming_stop_times)
