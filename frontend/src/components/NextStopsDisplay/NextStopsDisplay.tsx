@@ -70,15 +70,27 @@ const NextTimesItem = styled.div`
     flex-grow: 1;
 `;
 
+const LineDirectionContainer = styled.div`
+    height: 100%;
+    aspect-ratio: "1";
+    display: "flex";
+    flex-direction: "column";
+    align-items: center;
+`;
+
 const LineCircle = styled.div`
     background-color: ${(props) => props.color};
     color: white;
     border-radius: 100%;
-    height: 100%;
     aspect-ratio: 1;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex: "0 0 80%";
+`;
+
+const Direction = styled.div`
+    flex: 0 0 20%;
 `;
 
 export function NextStopsDisplay() {
@@ -126,9 +138,22 @@ export function NextStopsDisplay() {
                 return (
                     <NextTimesRow key={ind}>
                         <NextTimesItem>
-                            <LineCircle color={lineToColor.get(stop.line)}>
-                                {stop.line}
-                            </LineCircle>
+                            <LineDirectionContainer>
+                                <LineCircle
+                                    color={lineToColor.get(stop.line)}
+                                    style={{}}
+                                >
+                                    {stop.line}
+                                </LineCircle>
+                                <Direction
+                                    style={{
+                                        flex: "0 0 20%",
+                                        fontSize: "2rem",
+                                    }}
+                                >
+                                    {stop.direction}
+                                </Direction>
+                            </LineDirectionContainer>
                         </NextTimesItem>
                         <NextTimesItem>{stop.time} min</NextTimesItem>
                     </NextTimesRow>
