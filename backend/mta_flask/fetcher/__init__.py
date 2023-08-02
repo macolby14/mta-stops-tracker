@@ -24,33 +24,46 @@ class Fetcher:
 
 class FetchersGroup:
     def __init__(self, lines: set[str], api_key: str) -> None:
-        self.line_to_fetchers = {
-            "C": ACEFetcher(api_key),
-            "A": ACEFetcher(api_key),
-            "E": ACEFetcher(api_key),
-            "B": BDFMFetcher(api_key),
-            "D": BDFMFetcher(api_key),
-            "F": BDFMFetcher(api_key),
-            "M": BDFMFetcher(api_key),
+        self.line_to_line_group = {
+            "C": "ACE",
+            "A": "ACE",
+            "E": "ACE",
+            "B": "BDFM",
+            "D": "BDFM",
+            "F": "BDFM",
+            "M": "BDFM",
+            "G": "G",
+            "N": "NQRW",
+            "Q": "NQRW",
+            "R": "NQRW",
+            "W": "NQRW",
+            "J": "JZ",
+            "Z": "JZ",
+            "L": "L",
+            "1": "1234567",
+            "2": "1234567",
+            "3": "1234567",
+            "4": "1234567",
+            "5": "1234567",
+            "6": "1234567",
+            "7": "1234567",
+        }
+
+        self.line_group_to_fetchers = {
+            "ACE": ACEFetcher(api_key),
+            "BDFM": BDFMFetcher(api_key),
             "G": GFetcher(api_key),
-            "N": NQRWFetcher(api_key),
-            "Q": NQRWFetcher(api_key),
-            "R": NQRWFetcher(api_key),
-            "W": NQRWFetcher(api_key),
-            "J": JZFetcher(api_key),
-            "Z": JZFetcher(api_key),
+            "NQRW": NQRWFetcher(api_key),
+            "JZ": JZFetcher(api_key),
             "L": LFetcher(api_key),
-            "1": NumberLineFetcher(api_key),
-            "2": NumberLineFetcher(api_key),
-            "3": NumberLineFetcher(api_key),
-            "4": NumberLineFetcher(api_key),
-            "5": NumberLineFetcher(api_key),
-            "6": NumberLineFetcher(api_key),
-            "7": NumberLineFetcher(api_key),
+            "1234567": NumberLineFetcher(api_key),
         }
         self.fetchers = set()
+        line_groups = set()
         for line in lines:
-            self.fetchers.add(self.line_to_fetchers[line])
+            line_groups.add(self.line_to_line_group[line])
+        for line_group in line_groups:
+            self.fetchers.add(self.line_group_to_fetchers[line_group])
 
     async def fetch_and_parse(self) -> list[gtfs_realtime_pb2.FeedMessage]:
         return await asyncio.gather(
