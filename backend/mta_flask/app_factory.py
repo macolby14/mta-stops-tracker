@@ -19,3 +19,7 @@ class AppFactory:
             stations_abs_path = os.path.join(current_directory, "data/stations.csv")
             self._station_loader = StationLoader(stations_abs_path)
         return self._station_loader
+
+
+# global singleton
+app_factory = AppFactory()

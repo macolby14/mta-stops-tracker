@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from flask import Flask
 
 from . import mta_processor
-from .app_factory import AppFactory
+from .app_factory import app_factory
 from .location import Location
 from .models.StationSelection import StationSelected
 
@@ -20,8 +20,6 @@ def create_app(test_config=None):
     if not load_dotenv():
         print("No .env file exists. Required to run program")
         exit(1)
-
-    app_factory = AppFactory()
 
     @app.get("/api/health")
     def health() -> tuple[str, int]:
