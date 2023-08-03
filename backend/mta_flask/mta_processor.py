@@ -4,6 +4,7 @@ from datetime import datetime
 from .fetcher import FetchersGroup
 from .models.StopTimeUpdate import StopTimeUpdate, StopInfo
 from .models.StationSelection import StationSelected
+from .app_factory import app_factory
 
 from .proto import gtfs_realtime_pb2
 
@@ -60,14 +61,26 @@ def format_stop_info(upcoming_stops: list[StopTimeUpdate]) -> list[StopInfo]:
         delta = t - now
         time_to_next_stop = delta.seconds // 60
 
-        stop_name = stop.stop_id
+        stop_gtfs_id = stop.stop_id[:-1]
         line_name = stop.route_id
-        stop_direction = "Manhattan"
+        direction = stop.stop_id[-1]
+        direction_name = None
+        if direction == "N":
+            direction_name = app_factory.station_loader.get_station_by_gtfsId(
+                stop_gtfs_id
+            ).northLabel
+        elif direction == "S":
+            direction_name = app_factory.station_loader.get_station_by_gtfsId(
+                stop_gtfs_id
+            ).southLabel
+        else:
+            raise Exception("Invalid direction")
+
         formatted_stops.append(
             StopInfo(
-                station=stop_name,
+                station=stop_gtfs_id,
                 line=line_name,
-                direction=stop_direction,
+                direction=direction_name,
                 time=time_to_next_stop,
             )
         )

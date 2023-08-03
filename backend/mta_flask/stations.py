@@ -95,3 +95,10 @@ class StationLoader:
         return StationLoader._get_stations_by_closest_to_location(
             self.stations, location
         )[0:n]
+
+    def get_station_by_gtfsId(self, gtfsId: str) -> Station:
+        """Get station by gtfsId"""
+        for station in self.stations:
+            if station.gtfsId == gtfsId:
+                return station
+        raise Exception("Station not found")
