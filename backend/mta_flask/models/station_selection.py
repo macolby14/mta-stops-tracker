@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Optional
 
 
 @dataclass
@@ -9,7 +10,7 @@ class StationSelected:
     line: str
 
     def __init__(
-        self, id: str, direction: str, line: str, selected: bool | None
+        self, id: str, direction: str, line: str, selected: Optional[bool]
     ) -> None:
         direction_letter = direction[0].upper()
         self.stop_id = id + direction_letter
