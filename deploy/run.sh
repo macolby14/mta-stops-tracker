@@ -35,13 +35,13 @@ log "cleaning up python from previous runs" pkill python3
 
 # Start the backend 
 log "deactivating existing env" deactivate
-log "creating python venv" python3 -m venv backend-dist/venv
+log "creating python venv" python3.9 -m venv backend-dist/venv
 log  "activating venv" source backend-dist/venv/bin/activate
 
-log_fail "installing flask app" python3 -m pip install backend-dist/mta_flask*.whl
+log_fail "installing flask app" python3.9 -m pip install backend-dist/mta_flask*.whl
 
 echo $(date) >> ${LOG_DIR}/be.log
-log_fail "starting flask app" python3 -m flask --app mta_flask run &>> ${LOG_DIR}/be.log &
+log_fail "starting flask app" python3.9 -m flask --app mta_flask run &>> ${LOG_DIR}/be.log &
 echo "process: $!" >> ${LOG_DIR}/be.log
 
 log "deactivating existing env" deactivate
