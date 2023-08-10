@@ -30,7 +30,10 @@ def create_app(test_config=None):
         """
         Returns the next stop times for the specified stations.
         """
-        stations = request.get_json()["stations"]
+        request_json = request.get_json()
+        if request_json is None:
+            raise Exception("No JSON in request")
+        stations = request_json["stations"]
         stations_selected = [StationSelected(**station) for station in stations]
         nextStops = await mta_processor.get_upcoming_stop_times(
             stations_selected=stations_selected
