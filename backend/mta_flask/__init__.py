@@ -5,8 +5,8 @@ from flask import Flask, request
 
 from . import mta_processor
 from .app_factory import app_factory
-from .models.Location import Location
-from .models.StationSelection import StationSelected
+from .models.location import Location
+from .models.station_selection import StationSelected
 
 import dataclasses
 

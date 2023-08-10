@@ -2,8 +2,8 @@ import os
 from datetime import datetime
 
 from .fetcher import FetchersGroup
-from .models.StopTimeUpdate import StopTimeUpdate, StopInfo
-from .models.StationSelection import StationSelected
+from .models.stop import StopTimeUpdate, StopInfo
+from .models.station_selection import StationSelected
 from .app_factory import app_factory
 
 from .proto import gtfs_realtime_pb2

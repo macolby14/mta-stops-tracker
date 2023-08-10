@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 import json
 
-from .Location import Location
+from .location import Location
 
 
 class Station(BaseModel):

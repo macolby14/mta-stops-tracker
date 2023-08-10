@@ -5,8 +5,8 @@ Module for modeling subway station data
 import geopy.distance  # type: ignore
 
 
-from .models.Location import Location
-from .models.Station import Station
+from .models.location import Location
+from .models.station import Station
 
 
 def load_stations_from_csv(filename: str) -> list[Station]:
