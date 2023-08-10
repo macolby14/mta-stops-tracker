@@ -42,7 +42,7 @@ DIST_TMP_DIR=$DIST_DIR/tmp
 # Github variables
 # GITHUB_TOKEN= loaded from .env
 OWNER=macolby14
-REPO=mta-py
+REPO=mta-stops-tracker
 
 if [[ ! -d $LOG_DIR ]]
 then
