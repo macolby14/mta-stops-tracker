@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { styled } from "styled-components";
+import { RootState } from "../../reducers/store";
 
 enum LineColor {
     BLUE = "rgb(0,57,165)",
@@ -96,27 +98,39 @@ const Direction = styled.div`
 export function NextStopsDisplay() {
     const [nextStops, setNextStops] = useState<NextStop[]>([]);
     const [error, setError] = useState<string | null>(null);
+    const stationsSelected = useSelector(
+        (store: RootState) => store.stations.stationsSelected
+    );
 
-    async function fetchNextStopTimes() {
-        const res = (await fetch("/api/stops")
-            .then((res) => {
-                if (!res.ok) {
-                    console.error("Error fetching /api/stops");
-                    throw new Error(
-                        `Fetch Failed. Status:${res.status}, Message: ${res.statusText}`
-                    );
-                }
-                setError(null);
-                return res.json();
-            })
-            .catch((err) => {
-                console.error(err.message);
-                setError(err.message);
-            })) as NextStop[];
-        return res;
-    }
+    console.log(stationsSelected);
 
     useEffect(() => {
+        async function fetchNextStopTimes() {
+            const res = (await fetch("/api/stops", {
+                method: "POST",
+                body: JSON.stringify({ stations: stationsSelected }),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+                .then((res) => {
+                    if (!res.ok) {
+                        console.error("Error fetching /api/stops");
+                        throw new Error(
+                            `Fetch Failed. Status:${res.status}, Message: ${res.statusText}`
+                        );
+                    }
+                    setError(null);
+                    return res.json();
+                })
+                .catch((err) => {
+                    console.error(err.message);
+                    setError(err.message);
+                    return [];
+                })) as NextStop[];
+            return res;
+        }
+
         async function fetchData() {
             const nextStopTimes = await fetchNextStopTimes();
             setNextStops(nextStopTimes);
@@ -128,7 +142,7 @@ export function NextStopsDisplay() {
         return () => {
             clearInterval(fetchDataIntervalId);
         };
-    }, []);
+    }, [stationsSelected]);
 
     const errorDisplay = <div>Error {error}</div>;
 

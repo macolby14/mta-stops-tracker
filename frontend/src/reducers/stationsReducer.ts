@@ -4,7 +4,6 @@ export interface StationSelected {
     id: string; // i.e. A44
     direction: "north" | "south";
     line: string; // i.e. A, C, G etc.
-    selected: boolean;
 }
 
 const initionalState = {
@@ -16,27 +15,30 @@ export default function stationsReducer(
     action: StationAction
 ) {
     switch (action.type) {
-        case "LOAD_STATIONS_SELECTED":
-            const out = { ...state, stationsSelected: action.payload.stations };
-            return out;
         case "SET_STATION_SELECTED":
-            const prevStationsSelected = state.stationsSelected;
-            const newStationsSelected = prevStationsSelected.map(
-                (station: StationSelected) => {
-                    if (
-                        station.id === action.payload.id &&
-                        station.direction === action.payload.direction &&
-                        station.line === action.payload.line
-                    ) {
-                        return {
-                            ...station,
-                            selected: action.payload.selected,
-                        };
+            if (action.payload.selected === true) {
+                return {
+                    ...state,
+                    stationsSelected: [
+                        ...state.stationsSelected,
+                        action.payload,
+                    ],
+                };
+            } else {
+                const newStationsSelected = state.stationsSelected.filter(
+                    (station: StationSelected) => {
+                        if (
+                            station.id === action.payload.id &&
+                            station.direction === action.payload.direction &&
+                            station.line === action.payload.line
+                        ) {
+                            return false;
+                        }
+                        return true;
                     }
-                    return station;
-                }
-            );
-            return { ...state, stationsSelected: newStationsSelected };
+                );
+                return { ...state, stationsSelected: newStationsSelected };
+            }
         default:
             return state;
     }

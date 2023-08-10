@@ -1,11 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
-import {
-    loadStationsSelected,
-    setStationsSelected,
-} from "../actions/stationsActions";
-import { StationSelected } from "../../reducers/stationsReducer";
+import { setStationSelected } from "../actions/stationsActions";
 
 interface RawStation {
     name: string;
@@ -93,8 +89,6 @@ export function SettingsDisplay() {
     );
     const dispatch = useAppDispatch();
 
-    console.log(stationsSelected.filter((station) => station.selected));
-
     function handleSelectStation(
         ev: ChangeEvent,
         id: string,
@@ -104,7 +98,7 @@ export function SettingsDisplay() {
         const target = ev.target as HTMLInputElement;
         const checked = target.checked;
         dispatch(
-            setStationsSelected({ id, direction, selected: checked, line })
+            setStationSelected({ id, direction, selected: checked, line })
         );
     }
 
@@ -117,27 +111,6 @@ export function SettingsDisplay() {
                 .map((rawStation) => stationDataToDisplayRows(rawStation))
                 .flat();
             setStations(stationsDisplayRows);
-
-            const stationsSelectedFromStationRows = stationsDisplayRows
-                .map((stationRow) => {
-                    return [
-                        {
-                            id: stationRow.id,
-                            direction: "north",
-                            line: stationRow.line,
-                            selected: false,
-                        } as StationSelected,
-                        {
-                            id: stationRow.id,
-                            direction: "south",
-                            line: stationRow.line,
-                            selected: false,
-                        } as StationSelected,
-                    ];
-                })
-                .flat();
-
-            dispatch(loadStationsSelected(stationsSelectedFromStationRows));
         }
         fetchStationData();
     }, [dispatch]);
@@ -164,7 +137,7 @@ export function SettingsDisplay() {
                                                 station.id === id &&
                                                 station.direction === "north" &&
                                                 station.line === line
-                                        )?.selected || false
+                                        ) != undefined
                                     }
                                     onChange={(ev) =>
                                         handleSelectStation(
@@ -187,7 +160,7 @@ export function SettingsDisplay() {
                                                 station.id === id &&
                                                 station.direction === "south" &&
                                                 station.line === line
-                                        )?.selected || false
+                                        ) != undefined
                                     }
                                     onChange={(ev) =>
                                         handleSelectStation(

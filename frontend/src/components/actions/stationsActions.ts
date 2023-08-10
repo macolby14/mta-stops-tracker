@@ -1,19 +1,13 @@
 import { StationSelected } from "../../reducers/stationsReducer";
 
-export const loadStationsSelected = (stations: StationSelected[]) => {
-    return {
-        type: "LOAD_STATIONS_SELECTED",
-        payload: {
-            stations,
-        },
-    } as const;
-};
-export const setStationsSelected = ({
+type SetStationSelected = StationSelected & { selected: boolean };
+
+export const setStationSelected = ({
     id,
     direction,
     selected,
     line,
-}: StationSelected) => {
+}: SetStationSelected) => {
     return {
         type: "SET_STATION_SELECTED",
         payload: {
@@ -25,6 +19,4 @@ export const setStationsSelected = ({
     } as const;
 };
 
-export type StationAction =
-    | ReturnType<typeof loadStationsSelected>
-    | ReturnType<typeof setStationsSelected>;
+export type StationAction = ReturnType<typeof setStationSelected>;

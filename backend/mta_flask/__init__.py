@@ -1,7 +1,7 @@
 import json
 
 from dotenv import load_dotenv
-from flask import Flask
+from flask import Flask, request
 
 from . import mta_processor
 from .app_factory import app_factory
@@ -25,9 +25,10 @@ def create_app(test_config=None):
     def health() -> tuple[str, int]:
         return json.dumps({"message": "healthy"}), 200
 
-    @app.get("/api/stops")
+    @app.post("/api/stops")
     async def stops() -> tuple[str, int]:
-        stations_selected = [StationSelected(stop_id="A44N", line="C")]
+        stations = request.get_json()["stations"]
+        stations_selected = [StationSelected(**station) for station in stations]
         nextStops = await mta_processor.get_upcoming_stop_times(
             stations_selected=stations_selected
         )
