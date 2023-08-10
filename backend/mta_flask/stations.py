@@ -3,24 +3,10 @@ Module for modeling subway station data
 """
 
 import geopy.distance  # type: ignore
-from pydantic import BaseModel
-import json
-
-from .location import Location
 
 
-class Station(BaseModel):
-    """Model for a MTA subway station"""
-
-    name: str
-    lines: str
-    northLabel: str
-    southLabel: str
-    location: Location
-    gtfsId: str
-
-    def to_json(self) -> str:
-        return json.dumps(self.dict())
+from .models.Location import Location
+from .models.Station import Station
 
 
 def load_stations_from_csv(filename: str) -> list[Station]:

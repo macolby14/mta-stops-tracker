@@ -5,7 +5,7 @@ from flask import Flask, request
 
 from . import mta_processor
 from .app_factory import app_factory
-from .location import Location
+from .models.Location import Location
 from .models.StationSelection import StationSelected
 
 import dataclasses
@@ -27,6 +27,9 @@ def create_app(test_config=None):
 
     @app.post("/api/stops")
     async def stops() -> tuple[str, int]:
+        """
+        Returns the next stop times for the specified stations.
+        """
         stations = request.get_json()["stations"]
         stations_selected = [StationSelected(**station) for station in stations]
         nextStops = await mta_processor.get_upcoming_stop_times(
@@ -36,6 +39,9 @@ def create_app(test_config=None):
 
     @app.get("/api/stations")
     def stations() -> tuple[str, int]:
+        """
+        Returns the closest stations to the home location.
+        """
         closest_stations = app_factory.station_loader.get_n_closest_stations(
             HOME_LOCATION
         )

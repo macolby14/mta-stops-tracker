@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 @dataclass
 class StationSelected:
-    """Represents a stop time update from the MTA feed."""
+    """Represents a station selected by the user in the frontend"""
 
     stop_id: str
     line: str
