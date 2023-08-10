@@ -7,7 +7,7 @@ type ModalContextType = {
 
 export const ModalContext = createContext<ModalContextType>({
     showModal: undefined,
-    setShowModal: () => {},
+    setShowModal: () => {}, //eslint-disable-line @typescript-eslint/no-empty-function
 });
 
 interface ModalProviderProps {

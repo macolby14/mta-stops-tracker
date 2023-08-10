@@ -137,7 +137,7 @@ export function SettingsDisplay() {
                                                 station.id === id &&
                                                 station.direction === "north" &&
                                                 station.line === line
-                                        ) != undefined
+                                        ) != null
                                     }
                                     onChange={(ev) =>
                                         handleSelectStation(
@@ -160,7 +160,7 @@ export function SettingsDisplay() {
                                                 station.id === id &&
                                                 station.direction === "south" &&
                                                 station.line === line
-                                        ) != undefined
+                                        ) != null
                                     }
                                     onChange={(ev) =>
                                         handleSelectStation(
