@@ -12,7 +12,10 @@ class StopTimeUpdate:
 
 @dataclass
 class StopInfo:
+    """Represents a stop time update from the MTA feed."""
+
     direction: str
-    station: str
+    station_id: str
+    station_name: str
     line: str
     time: int  # time_to_next_stop

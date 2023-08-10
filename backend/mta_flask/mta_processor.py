@@ -65,20 +65,18 @@ def format_stop_info(upcoming_stops: list[StopTimeUpdate]) -> list[StopInfo]:
         line_name = stop.route_id
         direction = stop.stop_id[-1]
         direction_name = None
+        station = app_factory.station_loader.get_station_by_gtfsId(stop_gtfs_id)
         if direction == "N":
-            direction_name = app_factory.station_loader.get_station_by_gtfsId(
-                stop_gtfs_id
-            ).northLabel
+            direction_name = station.northLabel
         elif direction == "S":
-            direction_name = app_factory.station_loader.get_station_by_gtfsId(
-                stop_gtfs_id
-            ).southLabel
+            direction_name = station.southLabel
         else:
             raise Exception("Invalid direction")
 
         formatted_stops.append(
             StopInfo(
-                station=stop_gtfs_id,
+                station_id=stop_gtfs_id,
+                station_name=station.name,
                 line=line_name,
                 direction=direction_name,
                 time=time_to_next_stop,

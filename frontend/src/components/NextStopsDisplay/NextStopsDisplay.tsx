@@ -44,9 +44,10 @@ const lineToColor = new Map<string, string>(
 
 type NextStop = {
     line: string;
-    station: string;
+    station_id: string;
     time: number;
     direction: string;
+    station_name: string;
 };
 
 const NextTimesContainer = styled.div`
@@ -61,15 +62,17 @@ const NextTimesRow = styled.div`
     display: flex;
     flex-direction: row;
     position: relative;
+    align-items: center;
+    justify-content: center;
 `;
 
 const NextTimesItem = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 6rem;
     padding: 8px;
     flex-grow: 1;
+    text-align: center;
 `;
 
 const LineDirectionContainer = styled.div`
@@ -88,12 +91,9 @@ const LineCircle = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    flex: "0 0 80%";
 `;
 
-const Direction = styled.div`
-    flex: 0 0 20%;
-`;
+const Direction = styled.div``;
 
 export function NextStopsDisplay() {
     const [nextStops, setNextStops] = useState<NextStop[]>([]);
@@ -101,8 +101,6 @@ export function NextStopsDisplay() {
     const stationsSelected = useSelector(
         (store: RootState) => store.stations.stationsSelected
     );
-
-    console.log(stationsSelected);
 
     useEffect(() => {
         async function fetchNextStopTimes() {
@@ -151,17 +149,24 @@ export function NextStopsDisplay() {
             {nextStops.map((stop, ind) => {
                 return (
                     <NextTimesRow key={ind}>
-                        <NextTimesItem>
+                        <NextTimesItem
+                            style={{
+                                fontSize: "1rem",
+                                flexBasis: "10%",
+                            }}
+                        >
+                            {stop.station_name}
+                        </NextTimesItem>
+                        <NextTimesItem style={{ flexBasis: "45%" }}>
                             <LineDirectionContainer>
                                 <LineCircle
                                     color={lineToColor.get(stop.line)}
-                                    style={{}}
+                                    style={{ fontSize: "4rem" }}
                                 >
                                     {stop.line}
                                 </LineCircle>
                                 <Direction
                                     style={{
-                                        flex: "0 0 20%",
                                         fontSize: "2rem",
                                     }}
                                 >
@@ -169,7 +174,11 @@ export function NextStopsDisplay() {
                                 </Direction>
                             </LineDirectionContainer>
                         </NextTimesItem>
-                        <NextTimesItem>{stop.time} min</NextTimesItem>
+                        <NextTimesItem
+                            style={{ fontSize: "4rem", flexBasis: "45%" }}
+                        >
+                            {stop.time} min
+                        </NextTimesItem>
                     </NextTimesRow>
                 );
             })}
