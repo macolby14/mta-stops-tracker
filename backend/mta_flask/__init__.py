@@ -11,7 +11,7 @@ from .models.station_selection import StationSelected
 import dataclasses
 
 
-HOME_LOCATION = Location(lat=40.684026, lon=-73.967782)
+HOME_LOCATION = Location(lat=40.7626049, lon=-73.96191)
 
 
 def create_app(test_config=None):
