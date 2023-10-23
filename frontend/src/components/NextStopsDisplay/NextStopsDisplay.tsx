@@ -57,7 +57,7 @@ const NextTimesContainer = styled.div`
 `;
 
 const NextTimesRow = styled.div`
-    flex: 0 0 40%;
+    flex: 0 0 20%;
     border: 1px solid black;
     display: flex;
     flex-direction: row;
@@ -77,7 +77,6 @@ const NextTimesItem = styled.div`
 
 const LineDirectionContainer = styled.div`
     height: 100%;
-    aspect-ratio: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -88,6 +87,8 @@ const LineCircle = styled.div`
     color: white;
     border-radius: 100%;
     aspect-ratio: 1;
+    width: 72px;
+    height: 72px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -151,7 +152,8 @@ export function NextStopsDisplay() {
                     <NextTimesRow key={ind}>
                         <NextTimesItem
                             style={{
-                                fontSize: "1rem",
+                                fontSize: "2rem",
+                                whiteSpace: "nowrap",
                                 flexBasis: "10%",
                             }}
                         >
@@ -167,7 +169,7 @@ export function NextStopsDisplay() {
                                 </LineCircle>
                                 <Direction
                                     style={{
-                                        fontSize: "2rem",
+                                        fontSize: "1.5rem",
                                     }}
                                 >
                                     {stop.direction}
